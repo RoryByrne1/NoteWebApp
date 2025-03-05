@@ -1,0 +1,12 @@
+{
+  "notes": {
+    "note 1": {
+      "content": "hello this is note 1",
+      "timestamp": "..."
+    },
+    "note 2": {
+      "content": "hello this is now note 2\nwoah",
+      "timestamp": "..."
+    }
+  }
+}
