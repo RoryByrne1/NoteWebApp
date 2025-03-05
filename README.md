@@ -1,1 +1,1 @@
-A hello world servlet example for COMP0004.
+a web app for note taking
