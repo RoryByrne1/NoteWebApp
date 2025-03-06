@@ -1,13 +1,12 @@
 {
-  "notes": {
+  "category 1": {
     "note 1": {
-      "content": "hello this is note 1",
-      "timestamp": "..."
-    },
-    "note 2": {
-      "content": "hello this is now note 2\nwoah",
-      "timestamp": "..."
+      "content": {
+        "b1710012345678": {"type": "text", "text": "here is my picture"},
+        "b1710012356843": {"type": "image", "imagePath": "/images/meeting.png"}
+      },
+      "createdAt": "2025-03-05T15:53:31Z",
+      "lastEdited": "2025-03-06T10:21:10Z"
     }
   }
 }
-
