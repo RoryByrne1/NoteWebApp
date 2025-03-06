@@ -12,8 +12,32 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
+//import ucl.ac.uk.classes.Block;
+//import ucl.ac.uk.classes.ImageBlock;
+//import ucl.ac.uk.classes.NoteStorage;
+//import ucl.ac.uk.classes.TextBlock;
+//import java.util.List;
+
 public class Main
 {
+//  public static void main(String[] args)
+//  {
+//    NoteStorage notes = new NoteStorage("data/notes.json");
+//    System.out.println("yes?!");
+//    List<Block> blocks = notes.getCategoryMap().get("category 1").get("note 1").getBlocksList();
+//    for (Block b: blocks)
+//    {
+//      if (b instanceof TextBlock)
+//      {
+//        System.out.println(((TextBlock) b).getText());
+//      }
+//      else if (b instanceof ImageBlock)
+//      {
+//        System.out.println(((ImageBlock) b).getImagePath());
+//      }
+//    }
+//    // System.out.println(notes.getCategoryMap().get("category 1").get("note 1").getCreatedAt());
+//  }
   private static final int DEFAULT_PORT = 8080;
   private static final String DEFAULT_WEBAPP_DIR = "src/main/webapp/";
   private static final String DEFAULT_TARGET_CLASSES = "target/classes";

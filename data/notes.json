@@ -1,12 +1,1 @@
-{
-  "category 1": {
-    "note 1": {
-      "content": {
-        "b1710012345678": {"type": "text", "text": "here is my picture"},
-        "b1710012356843": {"type": "image", "imagePath": "/images/meeting.png"}
-      },
-      "createdAt": "2025-03-05T15:53:31Z",
-      "lastEdited": "2025-03-06T10:21:10Z"
-    }
-  }
-}
+{"category 1":{"note 1":{"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z","blocks":[{"text":"here is my picture","type":"text"},{"imagePath":"\/images\/meeting.png","type":"image"}]}}}

@@ -36,7 +36,7 @@ public class Note
         return Instant.now().toString();
     }
 
-    public void addContent(Block block)
+    public void addBlock(Block block)
     {
         blocks.add(block);
         this.lastEdited =  generateTimeStamp();
@@ -48,9 +48,9 @@ public class Note
         this.lastEdited = generateTimeStamp();
     }
 
-    public void setContentList(List<Block> contentList) // add contentList?
+    public void setBlockList(List<Block> blockList) // add blockList?
     {
-        this.blocks = contentList;
+        this.blocks = blockList;
         this.lastEdited = generateTimeStamp();
     }
 
@@ -59,7 +59,7 @@ public class Note
         return title;
     }
 
-    public List<Block> getContentList()
+    public List<Block> getBlocksList()
     {
         return blocks;
     }

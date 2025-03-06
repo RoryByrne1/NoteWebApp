@@ -1,7 +1,10 @@
 package ucl.ac.uk.classes;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.List;
@@ -17,7 +20,50 @@ public class NoteStorage
     public NoteStorage(String filePath)
     {
         this.filePath = filePath;
-        this.categoryMap = loadNotes();
+        File f = new File(filePath);
+        if(f.exists() && !f.isDirectory())
+        {
+            this.categoryMap = loadNotes();
+        }
+        else
+        {
+            this.categoryMap = new HashMap<>();
+            saveNotes();
+        }
+    }
+
+    /*
+    addCategory(String categoryName)
+    deleteCategory(String categoryName)
+    addNote(String category, Note note)
+    deleteNote(String category, String noteTitle)
+    editNote(String category, String noteTitle, Note updatedNote)
+    editTitle(String category, String oldTitle, String newTitle)
+    editCategoryName(String oldCategoryName, String newCategoryName)
+    moveNote(String oldCategory, String newCategory, String noteTitle)
+    moveBlock(String category, String noteTitle, int fromIndex, int toIndex)
+     */
+
+    public void editTitle(String category, String oldTitle, String newTitle)
+    {
+        if (!categoryMap.containsKey(category))
+        {
+            System.out.println("category not found");
+            return;
+        }
+
+        Map<String, Note> notesInCategory = categoryMap.get(category);
+        if (!notesInCategory.containsKey(oldTitle))
+        {
+            System.out.println("note not found");
+            return;
+        }
+
+        Note note = notesInCategory.remove(oldTitle);  // remove old key
+        note.setTitle(newTitle);  // update title in the note
+        notesInCategory.put(newTitle, note);  // insert with new title
+
+        saveNotes();
     }
 
     public Map<String, Map<String, Note>> getCategoryMap()
@@ -48,23 +94,28 @@ public class NoteStorage
                     String createdAt = (String) noteData.get("createdAt");
                     String lastEdited = (String) noteData.get("lastEdited");
 
-                    // Load blocks
-                    JSONObject blocksJson = (JSONObject) noteData.get("blocks");
+                    JSONArray blocksJson = (JSONArray) noteData.get("blocks");
+
+                    if (blocksJson == null)
+                    {
+                        blocksJson = new JSONArray(); // Ensure it's not null
+                    }
+
                     List<Block> blocks = new ArrayList<>();
 
-                    for (Object blockId : blocksJson.keySet())
+                    for (Object blockObj : blocksJson)
                     {
-                        JSONObject blockJson = (JSONObject) blocksJson.get(blockId);
+                        JSONObject blockJson = (JSONObject) blockObj;
                         String type = (String) blockJson.get("type");
 
                         Block block;
                         if ("text".equals(type))
                         {
-                            block = new TextBlock((String) blockId, (String) blockJson.get("text"));
+                            block = new TextBlock((String) blockJson.get("id"), (String) blockJson.get("text"));
                         }
                         else if ("image".equals(type))
                         {
-                            block = new ImageBlock((String) blockId, (String) blockJson.get("imagePath"));
+                            block = new ImageBlock((String) blockJson.get("id"), (String) blockJson.get("imagePath"));
                         }
                         else
                         {
