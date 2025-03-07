@@ -1,1 +1,1 @@
-{"category 1":{"note 1":{"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z","blocks":[{"text":"here is my picture","type":"text"},{"imagePath":"\/images\/meeting.png","type":"image"}]}}}
+{"category 1":{"note 1":{"blocks":[{"type":"text","text":"here is my picture"},{"type":"image","imagePath":"\/images\/meeting.png"}],"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z"}}}

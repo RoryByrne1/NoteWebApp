@@ -12,58 +12,152 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
+// ==============================================
+// ADD saveNotes() TO THE END OF EACH METHOD?????
+// ==============================================
+
 public class NoteStorage
 {
     private final String filePath;
     private Map<String, Map<String, Note>> categoryMap;
 
-    public NoteStorage(String filePath)
-    {
+    public NoteStorage(String filePath) {
         this.filePath = filePath;
         File f = new File(filePath);
-        if(f.exists() && !f.isDirectory())
-        {
+        if (f.exists() && !f.isDirectory()) {
             this.categoryMap = loadNotes();
-        }
-        else
-        {
+        } else {
             this.categoryMap = new HashMap<>();
             saveNotes();
         }
     }
 
-    /*
-    addCategory(String categoryName)
-    deleteCategory(String categoryName)
-    addNote(String category, Note note)
-    deleteNote(String category, String noteTitle)
-    editNote(String category, String noteTitle, Note updatedNote)
-    editTitle(String category, String oldTitle, String newTitle)
-    editCategoryName(String oldCategoryName, String newCategoryName)
-    moveNote(String oldCategory, String newCategory, String noteTitle)
-    moveBlock(String category, String noteTitle, int fromIndex, int toIndex)
-     */
+    public Boolean checkCategory(String categoryName)
+    {
+        if (!categoryMap.containsKey(categoryName))
+        {
+            System.out.println("category " + categoryName + "not found");
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean checkNote(String category, String noteTitle)
+    {
+        if (checkCategory(category) && !categoryMap.get(category).containsKey(noteTitle))
+        {
+            System.out.println("note " + noteTitle + "not found in " + category);
+            return false;
+        }
+        return true;
+    }
+
+    public Boolean checkBlock(String category, String noteTitle, String blockId)
+    {
+        if (checkNote(category, noteTitle) && !categoryMap.get(category).get(noteTitle).checkBlock(blockId))
+        {
+            System.out.println("block " + blockId + " not found in " + noteTitle + " in category " + category);
+            return false;
+        }
+        return true;
+    }
+
+    public void addCategory(String categoryName)
+    {
+        if (categoryMap.containsKey(categoryName))
+        {
+            System.out.println("category " + categoryName + " already exists");
+            return;
+        }
+
+        categoryMap.put(categoryName, new HashMap<>());
+    }
+
+    public void deleteCategory(String categoryName)
+    {
+        if (checkCategory(categoryName))
+            categoryMap.remove(categoryName);
+    }
+
+    public void addNote(String category, Note note)
+    {
+        if (checkCategory(category))
+        {
+            if (categoryMap.get(category).containsKey(note.getTitle()))
+            {
+                System.out.println("note " + note.getTitle() + "already exists in " + category);
+                return;
+            }
+
+            categoryMap.get(category).put(note.getTitle(), note);
+        }
+    }
+
+    public void deleteNote(String category, String noteTitle)
+    {
+        if (checkNote(category, noteTitle))
+            categoryMap.get(category).remove(noteTitle);
+    }
+
+    public void editNote(String category, String noteTitle, Note updatedNote)
+    {
+        if (checkNote(category, noteTitle))
+        {
+            // edit block?
+            // replace blocks?
+            // replace note?
+        }
+    }
 
     public void editTitle(String category, String oldTitle, String newTitle)
     {
-        if (!categoryMap.containsKey(category))
+        if (checkNote(category, oldTitle))
         {
-            System.out.println("category not found");
-            return;
+            Note note = categoryMap.get(category).remove(oldTitle);  // remove old key
+            note.setTitle(newTitle);  // update title in the note
+            categoryMap.get(category).put(newTitle, note);  // insert with new title
         }
+    }
 
-        Map<String, Note> notesInCategory = categoryMap.get(category);
-        if (!notesInCategory.containsKey(oldTitle))
+    public void editCategoryName(String oldCategoryName, String newCategoryName)
+    {
+        if (checkCategory(oldCategoryName))
+            categoryMap.put(newCategoryName, categoryMap.remove(oldCategoryName));
+    }
+
+    public void moveNote(String oldCategory, String newCategory, String noteTitle)
+    {
+        if (checkNote(oldCategory, noteTitle) && checkCategory(newCategory))
         {
-            System.out.println("note not found");
-            return;
+            Note note = categoryMap.get(oldCategory).remove(noteTitle);
+            categoryMap.get(newCategory).put(noteTitle, note);
         }
+    }
 
-        Note note = notesInCategory.remove(oldTitle);  // remove old key
-        note.setTitle(newTitle);  // update title in the note
-        notesInCategory.put(newTitle, note);  // insert with new title
+    public void addBlock(String category, String noteTitle, Block block)
+    {
+        if (checkNote(category, noteTitle))
+            categoryMap.get(category).get(noteTitle).addBlock(block);
+    }
 
-        saveNotes();
+    public void moveBlock(String category, String noteTitle, int fromIndex, int toIndex)
+    {
+        // use block ids? (Block block, int toIndex)
+        // keep using these indexes?
+    }
+
+    public void editBlock(String category, String noteTitle, Block block, String newContent) // blockId??
+    {
+        if (checkBlock(category, noteTitle, block.getId()))
+        {
+
+        }
+    }
+
+    public void deleteBlock(String category, String noteTitle, String blockId)
+    {
+        if (checkBlock(category, noteTitle, blockId))
+            categoryMap.get(category).get(noteTitle).deleteBlock(blockId);
     }
 
     public Map<String, Map<String, Note>> getCategoryMap()

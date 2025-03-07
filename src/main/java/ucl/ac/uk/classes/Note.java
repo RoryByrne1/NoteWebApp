@@ -42,6 +42,36 @@ public class Note
         this.lastEdited =  generateTimeStamp();
     }
 
+    public Boolean checkBlock(String blockId)
+    {
+        for (Block b: blocks)
+        {
+            if (b.getId().equals(blockId))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void deleteBlock(String blockId)
+    {
+        blocks.remove(getBlock(blockId));
+    }
+
+    public Block getBlock(String blockId)
+    {
+        Block block = null;
+        for (Block b: blocks)
+        {
+            if (b.getId().equals(blockId))
+            {
+                block = b;
+            }
+        }
+        return block;
+    }
+
     public void setTitle(String title)
     {
         this.title = title;
