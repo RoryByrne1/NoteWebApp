@@ -15,8 +15,9 @@ import org.apache.catalina.webresources.StandardRoot;
 // FOR MAIN TESTING ==========================
 import ucl.ac.uk.classes.Block;
 import ucl.ac.uk.classes.ImageBlock;
-import ucl.ac.uk.classes.NoteStorage;
 import ucl.ac.uk.classes.TextBlock;
+import ucl.ac.uk.model.Model;
+
 import java.util.List;
 // ===========================================
 
@@ -24,7 +25,7 @@ public class Main
 {
   public static void main2(String[] args)
   {
-    NoteStorage notes = new NoteStorage("data/notes.json");
+    Model notes = new Model();
     System.out.println("yes?!");
 //    List<Block> blocks = notes.getCategoryMap().get("category 1").get("note 1").getBlocksList();
 //    for (Block b: blocks)
