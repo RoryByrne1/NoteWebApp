@@ -8,24 +8,26 @@
   <title>Hello from the JSP page</title>
 </head>
 <body>
-  <div class="container mt-5">
-    <h2>my notes</h2>
-    <ul>
-      <%
-        Object notesListObj = request.getAttribute("notesList");
-        System.out.println("notesList object class: " + notesListObj.getClass().getName());
-        Map<String, List<Note>> notesList = (Map<String, List<Note>>) notesListObj;
-        for (String category: notesList.keySet())
-        {
-          for (Note note: notesList.get(category))
+<div class="container mt-5">
+  <h2>My Notes</h2>
+  <ul>
+    <%
+      Map<String, List<Note>> notesList = (Map<String, List<Note>>) request.getAttribute("notesList");
+      for (String category : notesList.keySet())
+      {
+    %>
+    <li><strong><%= category %></strong>
+      <ul>
+        <%
+          for (Note note : notesList.get(category))
           {
-      %>
-      <li>
-        <%=note.getTitle()%>
-      </li>
-      <% }
-        } %>
-    </ul>
-  </div>
+        %>
+        <li><%= note.getTitle() %></li>
+        <% } %>
+      </ul>
+    </li>
+    <% } %>
+  </ul>
+</div>
 </body>
 </html>

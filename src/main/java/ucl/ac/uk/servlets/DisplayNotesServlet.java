@@ -26,14 +26,13 @@ public class DisplayNotesServlet extends HttpServlet
     // Get the data from the model
     Model model = ModelFactory.getModel();
     Map<String, List<Note>> notesList = model.getNotesList();
-    System.out.println(notesList.getClass().getName());
     // Then add the data to the request object that will be sent to the Java Server Page, so that
     // the JSP can access the data (a Java data structure).
     request.setAttribute("notesList", notesList);
 
     // Then forward to JSP.
     ServletContext context = getServletContext();
-    RequestDispatcher dispatch = context.getRequestDispatcher("displayNotes.jsp");
+    RequestDispatcher dispatch = context.getRequestDispatcher("/displayNotes.jsp");
     dispatch.forward(request, response);
   }
 }
