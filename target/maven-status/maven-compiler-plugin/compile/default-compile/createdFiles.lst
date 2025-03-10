@@ -1,5 +1,9 @@
+ucl\ac\uk\classes\ImageBlock.class
+ucl\ac\uk\classes\Block.class
+ucl\ac\uk\classes\TextBlock.class
 ucl\ac\uk\model\ModelFactory.class
-ucl\ac\uk\servlets\HelloWorldServletAndJSP.class
+ucl\ac\uk\servlets\DisplayNotesServlet.class
 ucl\ac\uk\model\Model.class
 ucl\ac\uk\servlets\HelloWorldServlet.class
+ucl\ac\uk\classes\Note.class
 ucl\ac\uk\main\Main.class

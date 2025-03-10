@@ -2,29 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>note home page</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <h1>Welcome</h1>
-  <p>This is a standard html web page with no dynamic content. It can be accessed via:
-  <ul>
-    <li><a href="http://localhost:8080">http://localhost:8080</a>, the default index.html page for the website.</li>
-    <li>or, <a href="http://localhost:8080/index.html">http://localhost:8080/index.html</a>
-      if the index.html document name is included in the URL.
-    </li>
-  </ul>
-  <p>These links invoke the Java Servlet and Java Server Page (JSP) examples:</p>
-  <ul>
-    <li><a href="/helloworldservlet.html">Java Servlet</a>. The document name hello.html is mapped to the
-      servlet called HelloWorldServlet, which dynamically creates the actual html document.
-    </li>
-    <li><a href="/helloworldservletandjsp.html">Java Servlet and JSP</a>. The document name helloworldservletandjsp.html is
-      mapped to the servlet HelloWorldServletAndJSP, which uses the helloworld.jsp file to dynamically
-      display a message.
-    </li>
-  </ul>
+  <div class="container mt-5">
+    <h1>Welcome</h1>
+    <form action="displayNotes.html" method="get">
+      <button class="btn btn-secondary" id="displayNotes">Display Notes</button>
+    </form>
+  </div>
 </body>
 </html>
 

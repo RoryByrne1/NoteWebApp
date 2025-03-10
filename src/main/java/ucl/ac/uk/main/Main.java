@@ -111,6 +111,7 @@ public class Main
 
   public static void main(String[] args)
   {
+    System.out.println("trying?!");
     final Logger logger = initialiseLogger();
     final Path webappDirectory = Paths.get(DEFAULT_WEBAPP_DIR);
     final Path targetClassesDirectory = Paths.get(DEFAULT_TARGET_CLASSES);
