@@ -12,15 +12,18 @@
     <h2>my notes</h2>
     <ul>
       <%
-        List<Note> notesList = (List<Note>) request.getAttribute("notesList");
-//        for (String category: notesList.keySet())
-//        {
-          for (Note note: notesList)
+        Object notesListObj = request.getAttribute("notesList");
+        System.out.println("notesList object class: " + notesListObj.getClass().getName());
+        Map<String, List<Note>> notesList = (Map<String, List<Note>>) notesListObj;
+        for (String category: notesList.keySet())
+        {
+          for (Note note: notesList.get(category))
           {
       %>
-      <li> <%=note.getTitle()%>
+      <li>
+        <%=note.getTitle()%>
       </li>
-      <%
+      <% }
         } %>
     </ul>
   </div>

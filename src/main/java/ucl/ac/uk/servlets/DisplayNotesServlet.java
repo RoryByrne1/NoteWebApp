@@ -16,7 +16,7 @@ import ucl.ac.uk.model.Model;
 import ucl.ac.uk.model.ModelFactory;
 
 
-@WebServlet("/displayNotes.html")
+@WebServlet("/displayNotes")
 public class DisplayNotesServlet extends HttpServlet
 {
   @Override
