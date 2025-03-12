@@ -4,12 +4,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <jsp:include page="/meta.jsp"/>
-  <title>Hello from the JSP page</title>
+  <title>my notes</title>
+  <style>
+    body {
+      margin-left: 5%;
+    }
+    .button-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .button-container form {
+      margin: 0; /* Remove default form margins */
+    }
+  </style>
 </head>
 <body>
-<div class="container mt-5">
-  <h2>My Notes</h2>
+<div>
+  <h1>my notes</h1>
+  <div class="button-container">
+    <form action="displayNotes.html" method="get">
+      <button class="btn" id="addCategory">add category</button>
+    </form>
+    <form action="displayNotes.html" method="get">
+      <button class="btn" id="addNote">add note</button>
+    </form>
+  </div>
   <ul>
     <%
       Map<String, List<Note>> notesList = (Map<String, List<Note>>) request.getAttribute("notesList");
@@ -28,6 +48,9 @@
     </li>
     <% } %>
   </ul>
+  <form action="index.jsp" method="get">
+    <button class="btn" id="return">back</button>
+  </form>
 </div>
 </body>
 </html>

@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <jsp:include page="/meta.jsp"/>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>note home page</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>home page</title>
+  <style>
+    body {
+      margin-left: 5%;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      document.getElementById("datetime").textContent = new Date().toLocaleString('en-GB', {dateStyle:"short"});
+      }
+  </script>
 </head>
 <body>
-<div class="container mt-5">
-  <h1>new</h1>
+<div>
+  <p id="datetime"></p>
+  <h1>home page</h1>
   <form action="displayNotes.html" method="get">
-    <button class="btn btn-secondary" id="displayNotes">Display Notes</button>
+    <button class="btn" id="displayNotes">my notes</button>
   </form>
 </div>
 </body>
 </html>
-

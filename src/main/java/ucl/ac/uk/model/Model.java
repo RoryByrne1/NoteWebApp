@@ -11,10 +11,7 @@ import ucl.ac.uk.classes.TextBlock;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // ==============================================
 // ADD saveNotes() TO THE END OF EACH METHOD?????
@@ -70,7 +67,7 @@ public class Model {
 
     public Map<String, List<Note>> getNotesList()
     {
-        Map<String, List<Note>> notesList = new HashMap<>();
+        Map<String, List<Note>> notesList = new LinkedHashMap<>();
 
         for (String category: categoryMap.keySet())
         {

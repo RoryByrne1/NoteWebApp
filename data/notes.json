@@ -1,1 +1,3 @@
-{"category 1":{"note 1":{"blocks":[{"type":"text","text":"here is my picture"},{"type":"image","imagePath":"\/images\/meeting.png"}],"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z"}}}
+{"category 1":{"note 1":{"blocks":[{"type":"text","text":"here is my picture"},{"type":"image","imagePath":"\/images\/meeting.png"}],"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z"},
+               "note 2":{"blocks":[{"type":"text","text":"here is my picture"},{"type":"image","imagePath":"\/images\/meeting.png"}],"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z"}},
+  "category 2":{"note 1":{"blocks":[{"type":"text","text":"here is my picture"},{"type":"image","imagePath":"\/images\/meeting.png"}],"lastEdited":"2025-03-06T18:55:48.761515100Z","createdAt":"2025-03-05T15:53:31Z"}}}
