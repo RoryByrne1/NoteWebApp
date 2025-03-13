@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class Note
 {
+    private final String id;
     private String title;
     private List<Block> blocks;
     final private String createdAt;
@@ -16,6 +17,7 @@ public class Note
     // new note
     public Note(String title)
     {
+        this.id = generateNoteID();
         this.title = title;
         this.blocks = new ArrayList<>();
         this.createdAt = generateTimeStamp();
@@ -23,12 +25,18 @@ public class Note
     }
 
     // loading old note
-    public Note(String title, List<Block> blocks, String createdAt, String lastEdited)
+    public Note(String id, String title, List<Block> blocks, String createdAt, String lastEdited)
     {
+        this.id = id;
         this.title = title;
         this.blocks = blocks;
         this.createdAt = createdAt;
         this.lastEdited = lastEdited;
+    }
+
+    public static String generateNoteID()
+    {
+        return "n" + Instant.now().toEpochMilli();
     }
 
     private static String generateTimeStamp()
@@ -89,6 +97,8 @@ public class Note
         return title;
     }
 
+    public String getId() { return id; }
+
     public List<Block> getBlocksList()
     {
         return blocks;
@@ -104,10 +114,10 @@ public class Note
         return lastEdited;
     }
 
-    //  jsonify note contents (name is handled outside)
     public Map<String, Object> toJson()
     {
         return Map.of(
+                "title", title,
                 "blocks", blocks.stream().map(Block::toJson).collect(Collectors.toList()),
                 "createdAt", createdAt,
                 "lastEdited", lastEdited

@@ -18,9 +18,7 @@
 <div>
   <p id="datetime"></p>
   <h1>home page</h1>
-  <form action="displayNotes.html" method="get">
-    <button class="btn" id="displayNotes">my notes</button>
-  </form>
+  <a href="displayNotes">my notes</a>
 </div>
 </body>
 </html>

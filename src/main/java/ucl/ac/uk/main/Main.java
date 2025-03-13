@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.logging.*;
 
 import org.apache.catalina.Context;
@@ -15,6 +16,7 @@ import org.apache.catalina.webresources.StandardRoot;
 // FOR MAIN TESTING ==========================
 import ucl.ac.uk.classes.Block;
 import ucl.ac.uk.classes.ImageBlock;
+import ucl.ac.uk.classes.Note;
 import ucl.ac.uk.classes.TextBlock;
 import ucl.ac.uk.model.Model;
 
@@ -23,28 +25,6 @@ import java.util.List;
 
 public class Main
 {
-  public static void main2(String[] args)
-  {
-    Model notes = new Model();
-    System.out.println("yes?!");
-//    List<Block> blocks = notes.getCategoryMap().get("category 1").get("note 1").getBlocksList();
-//    for (Block b: blocks)
-//    {
-//      if (b instanceof TextBlock)
-//      {
-//        System.out.println(((TextBlock) b).getText());
-//      }
-//      else if (b instanceof ImageBlock)
-//      {
-//        System.out.println(((ImageBlock) b).getImagePath());
-//      }
-//    }
-    notes.addCategory("new1");
-    notes.deleteCategory("new1");
-    notes.saveNotes();
-    // System.out.println(notes.getCategoryMap().get("category 1").get("note 1").getCreatedAt());
-  }
-
   private static final int DEFAULT_PORT = 8080;
   private static final String DEFAULT_WEBAPP_DIR = "src/main/webapp/";
   private static final String DEFAULT_TARGET_CLASSES = "target/classes";
@@ -111,7 +91,7 @@ public class Main
 
   public static void main(String[] args)
   {
-    System.out.println("trying?!");
+//    testing();
     final Logger logger = initialiseLogger();
     final Path webappDirectory = Paths.get(DEFAULT_WEBAPP_DIR);
     final Path targetClassesDirectory = Paths.get(DEFAULT_TARGET_CLASSES);
@@ -136,5 +116,42 @@ public class Main
     {
       logger.log(Level.SEVERE, "Error occurred while starting the server", e);
     }
+  }
+
+  public static void testing()
+  {
+    Model notes = new Model();
+    System.out.println("yes?!");
+//    List<Block> blocks = notes.getCategoryMap().get("category 1").get("note 1").getBlocksList();
+//    for (Block b: blocks)
+//    {
+//      if (b instanceof TextBlock)
+//      {
+//        System.out.println(((TextBlock) b).getText());
+//      }
+//      else if (b instanceof ImageBlock)
+//      {
+//        System.out.println(((ImageBlock) b).getImagePath());
+//      }
+//    }
+    notes.addCategory("category 1");
+    notes.addCategory("category 2");
+
+    Note note1 = new Note("n1", "note 1", new ArrayList<>(), "now", "then");
+    Block block1 = new TextBlock("this is the text");
+    notes.addNote("category 1", note1);
+    notes.addBlock("category 1", note1.getId(), block1);
+
+    Note note2 = new Note("n2", "note 2", new ArrayList<>(), "now", "then");
+    Block block2 = new ImageBlock("/images/this.png");
+    notes.addNote("category 1", note2);
+    notes.addBlock("category 1", note2.getId(), block2);
+
+
+    Note note3 = new Note("n3", "note 3", new ArrayList<>(), "now", "then");
+    Block block3 = new TextBlock("more text!");
+    notes.addNote("category 2", note3);
+    notes.addBlock("category 2", note3.getId(), block3);
+    notes.saveNotes();
   }
 }

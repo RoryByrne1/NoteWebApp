@@ -45,21 +45,21 @@ public class Model {
         return true;
     }
 
-    public Boolean checkNote(String category, String noteTitle)
+    public Boolean checkNote(String category, String noteId)
     {
-        if (checkCategory(category) && !categoryMap.get(category).containsKey(noteTitle))
+        if (checkCategory(category) && !categoryMap.get(category).containsKey(noteId))
         {
-            System.out.println("note " + noteTitle + "not found in " + category);
+            System.out.println("note " + noteId + "not found in " + category);
             return false;
         }
         return true;
     }
 
-    public Boolean checkBlock(String category, String noteTitle, String blockId)
+    public Boolean checkBlock(String category, String noteId, String blockId)
     {
-        if (checkNote(category, noteTitle) && !categoryMap.get(category).get(noteTitle).checkBlock(blockId))
+        if (checkNote(category, noteId) && !categoryMap.get(category).get(noteId).checkBlock(blockId))
         {
-            System.out.println("block " + blockId + " not found in " + noteTitle + " in category " + category);
+            System.out.println("block " + blockId + " not found in " + noteId + " in category " + category);
             return false;
         }
         return true;
@@ -71,15 +71,27 @@ public class Model {
 
         for (String category: categoryMap.keySet())
         {
-            List<Note> notes = new ArrayList<>();
-            for (String noteTitle: categoryMap.get(category).keySet())
-            {
-                notes.add(categoryMap.get(category).get(noteTitle));
-            }
+            List<Note> notes = new ArrayList<>(categoryMap.get(category).values());
             notesList.put(category, notes);
         }
 
         return notesList;
+    }
+
+    public Note getNote(String noteId)
+    {
+        Note note = null;
+
+        for (String category: categoryMap.keySet())
+        {
+            for (Note n: categoryMap.get(category).values())
+            {
+                if (n.getId().equals(noteId))
+                    note = n;
+            }
+        }
+
+        return note;
     }
 
     public void addCategory(String categoryName)
@@ -103,25 +115,25 @@ public class Model {
     {
         if (checkCategory(category))
         {
-            if (categoryMap.get(category).containsKey(note.getTitle()))
+            if (categoryMap.get(category).containsKey(note.getId()))
             {
-                System.out.println("note " + note.getTitle() + "already exists in " + category);
+                System.out.println("note " + note.getId() + " already exists in " + category);
                 return;
             }
 
-            categoryMap.get(category).put(note.getTitle(), note);
+            categoryMap.get(category).put(note.getId(), note);
         }
     }
 
-    public void deleteNote(String category, String noteTitle)
+    public void deleteNote(String category, String noteId)
     {
-        if (checkNote(category, noteTitle))
-            categoryMap.get(category).remove(noteTitle);
+        if (checkNote(category, noteId))
+            categoryMap.get(category).remove(noteId);
     }
 
-    public void editNote(String category, String noteTitle, Note updatedNote)
+    public void editNote(String category, String noteId, Note updatedNote)
     {
-        if (checkNote(category, noteTitle))
+        if (checkNote(category, noteId))
         {
             // edit block?
             // replace blocks?
@@ -145,39 +157,46 @@ public class Model {
             categoryMap.put(newCategoryName, categoryMap.remove(oldCategoryName));
     }
 
-    public void moveNote(String oldCategory, String newCategory, String noteTitle)
+    public void moveNote(String oldCategory, String newCategory, String noteId)
     {
-        if (checkNote(oldCategory, noteTitle) && checkCategory(newCategory))
+        if (checkNote(oldCategory, noteId) && checkCategory(newCategory))
         {
-            Note note = categoryMap.get(oldCategory).remove(noteTitle);
-            categoryMap.get(newCategory).put(noteTitle, note);
+            Note note = categoryMap.get(oldCategory).remove(noteId);
+            categoryMap.get(newCategory).put(noteId, note);
         }
     }
 
-    public void addBlock(String category, String noteTitle, Block block)
+    public void addBlock(String category, String noteId, Block block)
     {
-        if (checkNote(category, noteTitle))
-            categoryMap.get(category).get(noteTitle).addBlock(block);
+        if (checkNote(category, noteId)) {
+            if (categoryMap.get(category).get(noteId).checkBlock(block.getId())) {
+                System.out.println("block " + block.getId() + " already exists in note " + noteId + " in category " + category);
+                return;
+            }
+
+            categoryMap.get(category).get(noteId).addBlock(block);
+        }
+
     }
 
-    public void moveBlock(String category, String noteTitle, int fromIndex, int toIndex)
+    public void moveBlock(String category, String noteId, int fromIndex, int toIndex)
     {
         // use block ids? (Block block, int toIndex)
         // keep using these indexes?
     }
 
-    public void editBlock(String category, String noteTitle, Block block, String newContent) // blockId??
+    public void editBlock(String category, String noteId, String blockId, String newContent) // blockId??
     {
-        if (checkBlock(category, noteTitle, block.getId()))
+        if (checkBlock(category, noteId, blockId))
         {
 
         }
     }
 
-    public void deleteBlock(String category, String noteTitle, String blockId)
+    public void deleteBlock(String category, String noteId, String blockId)
     {
-        if (checkBlock(category, noteTitle, blockId))
-            categoryMap.get(category).get(noteTitle).deleteBlock(blockId);
+        if (checkBlock(category, noteId, blockId))
+            categoryMap.get(category).get(noteId).deleteBlock(blockId);
     }
 
     public Map<String, Map<String, Note>> getCategoryMap()
@@ -202,9 +221,9 @@ public class Model {
 
                 for (Object noteKey : categoryNotes.keySet())
                 {
-                    String noteTitle = (String) noteKey;
-                    JSONObject noteData = (JSONObject) categoryNotes.get(noteTitle);
-
+                    String noteId = (String) noteKey;
+                    JSONObject noteData = (JSONObject) categoryNotes.get(noteId);
+                    String noteTitle = (String) noteData.get("title");
                     String createdAt = (String) noteData.get("createdAt");
                     String lastEdited = (String) noteData.get("lastEdited");
 
@@ -212,7 +231,7 @@ public class Model {
 
                     if (blocksJson == null)
                     {
-                        blocksJson = new JSONArray(); // Ensure it's not null
+                        blocksJson = new JSONArray();
                     }
 
                     List<Block> blocks = new ArrayList<>();
@@ -223,23 +242,23 @@ public class Model {
                         String type = (String) blockJson.get("type");
 
                         Block block;
-                        if ("text".equals(type))
+                        if (type.equals("text"))
                         {
                             block = new TextBlock((String) blockJson.get("id"), (String) blockJson.get("text"));
                         }
-                        else if ("image".equals(type))
+                        else if (type.equals("image"))
                         {
                             block = new ImageBlock((String) blockJson.get("id"), (String) blockJson.get("imagePath"));
                         }
                         else
                         {
-                            continue; // Ignore unknown block types
+                            continue;
                         }
 
                         blocks.add(block);
                     }
 
-                    notes.put(noteTitle, new Note(noteTitle, blocks, createdAt, lastEdited));
+                    notes.put(noteId, new Note(noteId, noteTitle, blocks, createdAt, lastEdited));
                 }
 
                 map.put(category, notes);
@@ -262,9 +281,9 @@ public class Model {
             JSONObject categoryNotes = new JSONObject();
             Map<String, Note> notes = categoryMap.get(category);
 
-            for (String noteTitle : notes.keySet())
+            for (Note note : notes.values())
             {
-                categoryNotes.put(noteTitle, notes.get(noteTitle).toJson());
+                categoryNotes.put(note.getId(), note.toJson());
             }
 
             jsonObject.put(category, categoryNotes);

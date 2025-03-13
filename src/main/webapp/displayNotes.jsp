@@ -15,7 +15,7 @@
       margin-bottom: 20px;
     }
     .button-container form {
-      margin: 0; /* Remove default form margins */
+      margin: 0;
     }
   </style>
 </head>
@@ -42,15 +42,13 @@
           for (Note note : notesList.get(category))
           {
         %>
-        <li><%= note.getTitle() %></li>
+        <li><a href="viewNote?noteId=<%= note.getId() %>"><%= note.getTitle() %></a></li>
         <% } %>
       </ul>
     </li>
     <% } %>
   </ul>
-  <form action="index.jsp" method="get">
-    <button class="btn" id="return">back</button>
-  </form>
+  <a href="index.jsp" class="back-link">&larr; back</a>
 </div>
 </body>
 </html>

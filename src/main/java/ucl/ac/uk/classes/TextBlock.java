@@ -32,6 +32,7 @@ public class TextBlock extends Block
     public Map<String, Object> toJson()
     {
         return Map.of(
+                "id", getId(),
                 "type", "text",
                 "text", text
         );
