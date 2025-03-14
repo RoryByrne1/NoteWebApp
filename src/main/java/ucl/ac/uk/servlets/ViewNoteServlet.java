@@ -1,6 +1,7 @@
 package ucl.ac.uk.servlets;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,8 @@ public class ViewNoteServlet extends HttpServlet
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        String noteId = request.getParameter("noteId");
+        System.out.println(request.getPathInfo());
+        String noteId = request.getParameter("id");
 
         if (noteId == null || noteId.isEmpty())
         {
@@ -33,7 +35,8 @@ public class ViewNoteServlet extends HttpServlet
 
         // Get the data from the model
         Model model = ModelFactory.getModel();
-        Note note = model.getNote(noteId);
+        List<String> path = new ArrayList<>(); // BADDBABDBADBABDBADBABD
+        Note note = model.getNote(path);
         // Then add the data to the request object that will be sent to the Java Server Page, so that
         // the JSP can access the data (a Java data structure).
         request.setAttribute("note", note);

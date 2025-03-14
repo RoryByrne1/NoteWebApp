@@ -32,7 +32,7 @@ public class ImageBlock extends Block
     public Map<String, Object> toJson()
     {
         return Map.of(
-                "id", getId(),
+                "id", id,
                 "type", "image",
                 "imagePath", imagePath
         );

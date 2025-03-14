@@ -6,48 +6,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Note
+public class Note extends Item
 {
-    private final String id;
-    private String title;
     private List<Block> blocks;
-    final private String createdAt;
-    private String lastEdited;
 
     // new note
-    public Note(String title)
+    public Note(String name)
     {
-        this.id = generateNoteID();
-        this.title = title;
+        super(name);
         this.blocks = new ArrayList<>();
-        this.createdAt = generateTimeStamp();
-        this.lastEdited = generateTimeStamp();
     }
 
     // loading old note
-    public Note(String id, String title, List<Block> blocks, String createdAt, String lastEdited)
+    public Note(String id, String name, List<Block> blocks, String createdAt, String lastEdited)
     {
-        this.id = id;
-        this.title = title;
+        super(id, name, createdAt, lastEdited);
         this.blocks = blocks;
-        this.createdAt = createdAt;
-        this.lastEdited = lastEdited;
     }
 
-    public static String generateNoteID()
+    @Override
+    public String generateId()
     {
         return "n" + Instant.now().toEpochMilli();
     }
 
-    private static String generateTimeStamp()
-    {
-        return Instant.now().toString();
-    }
-
     public void addBlock(Block block)
     {
-        blocks.add(block);
-        this.lastEdited =  generateTimeStamp();
+        if (checkBlock(block.getId()))
+        {
+            blocks.add(block);
+            updateLastEdited();
+        }
     }
 
     public Boolean checkBlock(String blockId)
@@ -80,44 +69,22 @@ public class Note
         return block;
     }
 
-    public void setTitle(String title)
-    {
-        this.title = title;
-        this.lastEdited = generateTimeStamp();
-    }
-
     public void setBlockList(List<Block> blockList) // add blockList?
     {
         this.blocks = blockList;
-        this.lastEdited = generateTimeStamp();
+        updateLastEdited();
     }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public String getId() { return id; }
 
     public List<Block> getBlocksList()
     {
         return blocks;
     }
 
-    public String getCreatedAt()
-    {
-        return createdAt;
-    }
-
-    public String getLastEdited()
-    {
-        return lastEdited;
-    }
-
+    @Override
     public Map<String, Object> toJson()
     {
         return Map.of(
-                "title", title,
+                "name", name,
                 "blocks", blocks.stream().map(Block::toJson).collect(Collectors.toList()),
                 "createdAt", createdAt,
                 "lastEdited", lastEdited

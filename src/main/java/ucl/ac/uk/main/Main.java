@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.*;
 
 import org.apache.catalina.Context;
@@ -14,10 +15,7 @@ import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
 // FOR MAIN TESTING ==========================
-import ucl.ac.uk.classes.Block;
-import ucl.ac.uk.classes.ImageBlock;
-import ucl.ac.uk.classes.Note;
-import ucl.ac.uk.classes.TextBlock;
+import ucl.ac.uk.classes.*;
 import ucl.ac.uk.model.Model;
 
 import java.util.List;
@@ -118,40 +116,23 @@ public class Main
     }
   }
 
-  public static void testing()
+  public static void main2(String[] args)
   {
-    Model notes = new Model();
     System.out.println("yes?!");
-//    List<Block> blocks = notes.getCategoryMap().get("category 1").get("note 1").getBlocksList();
-//    for (Block b: blocks)
-//    {
-//      if (b instanceof TextBlock)
-//      {
-//        System.out.println(((TextBlock) b).getText());
-//      }
-//      else if (b instanceof ImageBlock)
-//      {
-//        System.out.println(((ImageBlock) b).getImagePath());
-//      }
-//    }
-    notes.addCategory("category 1");
-    notes.addCategory("category 2");
-
-    Note note1 = new Note("n1", "note 1", new ArrayList<>(), "now", "then");
-    Block block1 = new TextBlock("this is the text");
-    notes.addNote("category 1", note1);
-    notes.addBlock("category 1", note1.getId(), block1);
-
-    Note note2 = new Note("n2", "note 2", new ArrayList<>(), "now", "then");
-    Block block2 = new ImageBlock("/images/this.png");
-    notes.addNote("category 1", note2);
-    notes.addBlock("category 1", note2.getId(), block2);
-
-
-    Note note3 = new Note("n3", "note 3", new ArrayList<>(), "now", "then");
-    Block block3 = new TextBlock("more text!");
-    notes.addNote("category 2", note3);
-    notes.addBlock("category 2", note3.getId(), block3);
-    notes.saveNotes();
+//    Folder folder = new Folder("folder-1", "folder 1", new HashMap<>(), "then", "now");
+//    Note note = new Note("n1", "note 1", new ArrayList<>(), "then", "now");
+//    System.out.println(folder.name);
+    Model notes = new Model();
+//    notes.addItem(new ArrayList<>(), folder);
+    List<String> path = new ArrayList<>();
+//    notes.addItem(path, note);
+//    notes.saveNotes();
+//    Note note = new Note("n2", "note 2", new ArrayList<>(), "then", "now");
+//    notes.addItem(path, note);
+    path.add("folder-1");
+    path.add("n1");
+//    Note note2 = new Note("n3", "note 3", new ArrayList<>(), "then", "now");
+//    notes.addItem(path, note2);
+    System.out.println(notes.getNote(path).getName());
   }
 }

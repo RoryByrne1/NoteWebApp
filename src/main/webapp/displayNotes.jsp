@@ -42,7 +42,7 @@
           for (Note note : notesList.get(category))
           {
         %>
-        <li><a href="viewNote?noteId=<%= note.getId() %>"><%= note.getTitle() %></a></li>
+        <li><a href="viewNote?id=<%= note.getId() %>"><%= note.name %></a></li>
         <% } %>
       </ul>
     </li>

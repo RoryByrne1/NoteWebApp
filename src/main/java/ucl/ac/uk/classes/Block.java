@@ -5,7 +5,7 @@ import java.util.Map;
 
 public abstract class Block
 {
-    private final String id;
+    public final String id;
 
     public Block(String id)
     {
