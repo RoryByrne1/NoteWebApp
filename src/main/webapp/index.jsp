@@ -18,7 +18,7 @@
 <div>
   <p id="datetime"></p>
   <h1>home page</h1>
-  <a href="displayNotes">my notes</a>
+  <a href="displayFolder">my notes</a>
 </div>
 </body>
 </html>

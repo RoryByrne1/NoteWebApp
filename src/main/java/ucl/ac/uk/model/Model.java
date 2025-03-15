@@ -11,7 +11,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 // ==============================================
 // ADD saveNotes() TO THE END OF EACH METHOD?????
@@ -241,33 +240,6 @@ public class Model {
         }
         return new Note(id, name, blocks, createdAt, lastEdited);
     }
-
-//    public void saveNotes()
-//    {
-//        JSONObject jsonObject = new JSONObject();
-//
-//        for (String folder : rootDirectory.keySet())
-//        {
-//            JSONObject folderNotes = new JSONObject();
-//            Map<String, Note> notes = rootDirectory.get(folder);
-//
-//            for (Note note : notes.values())
-//            {
-//                folderNotes.put(note.getId(), note.toJson());
-//            }
-//
-//            jsonObject.put(folder, folderNotes);
-//        }
-//
-//        try (FileWriter file = new FileWriter(jsonFilePath))
-//        {
-//            file.write(jsonObject.toJSONString());
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void saveNotes() {
         try (FileWriter file = new FileWriter(jsonFilePath)) {

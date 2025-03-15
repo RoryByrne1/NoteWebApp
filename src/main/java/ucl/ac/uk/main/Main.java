@@ -130,9 +130,8 @@ public class Main
 //    Note note = new Note("n2", "note 2", new ArrayList<>(), "then", "now");
 //    notes.addItem(path, note);
     path.add("folder-1");
-    path.add("n1");
+    Folder folder = new Folder("folder-2", "folder 2", new HashMap<>(), "then", "now");
 //    Note note2 = new Note("n3", "note 3", new ArrayList<>(), "then", "now");
-//    notes.addItem(path, note2);
-    System.out.println(notes.getNote(path).getName());
+    notes.addItem(path, folder);
   }
 }
