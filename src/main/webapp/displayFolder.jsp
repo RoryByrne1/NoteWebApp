@@ -22,6 +22,9 @@
         .button-container form {
             margin: 0;
         }
+        .breadcrumbs {
+            margin-bottom: 12px;
+        }
         a {
             text-decoration: none;
             color: black;
@@ -36,9 +39,13 @@
     <%
         String pathString = (String) request.getAttribute("pathString");
         String[] pathComponents = pathString == null || pathString.isEmpty() ? new String[0] : pathString.substring(1).split("/");
-        Folder folder = (Folder) request.getAttribute("folder");
+        String folderName = (String) request.getAttribute("folderName");
+        List<Item> contentsList = (List<Item>) request.getAttribute("contentsList");
+        String sortBy = (String) request.getAttribute("sortBy");
+        boolean ascending = (boolean) request.getAttribute("ascending");
+        String parameters =  "?sortBy=" + sortBy + "&ascending=" + ascending;
     %>
-    <h1><%=folder.getName().equals("root") ? "my notes" : folder.getName()%></h1>
+    <h1><%= folderName.equals("root") ? "my notes" : folderName %></h1>
     <div class="button-container">
         <form action="displayFolder" method="get">
             <button class="btn" id="addCategory">add folder</button>
@@ -48,20 +55,36 @@
         </form>
     </div>
     <div class="breadcrumbs">
-        <a href="<%= request.getContextPath() %>/displayFolder">📁</a> /
+        <a href="<%= request.getContextPath() %>/displayFolder<%= parameters %>">📁</a> /
         <%
             String cumulativePath = "";
             for (int i = 0; i < pathComponents.length; i++) {
                 cumulativePath += "/" + pathComponents[i];
         %>
-        <a href="<%= request.getContextPath() %>/displayFolder<%= cumulativePath %>"><%= pathComponents[i].replace("-", " ")%></a> /
+        <a href="<%= request.getContextPath() %>/displayFolder<%= cumulativePath + parameters%>"><%= pathComponents[i].replace("-", " ")%></a> /
         <%
             }
         %>
     </div>
+    <div class="sorting">
+        <span>sort by:</span>
+        <%
+            String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "";
+            String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "";
+            String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "";
+
+            boolean nameAscending = sortBy.equals("name") ? !ascending : true;
+            boolean dateAscending = sortBy.equals("createdAt") ? !ascending : true;
+            boolean modifiedAscending = sortBy.equals("lastEdited") ? !ascending : true;
+        %>
+
+        <a href="?sortBy=name&ascending=<%= nameAscending %>">name<%= nameArrow %></a> |
+        <a href="?sortBy=createdAt&ascending=<%= dateAscending %>">date created<%= dateArrow %></a> |
+        <a href="?sortBy=lastEdited&ascending=<%= modifiedAscending %>">last modified<%= modifiedArrow %></a>
+    </div>
     <ul>
         <%
-            for (Item item : folder.getContentsList("name", true))
+            for (Item item : contentsList)
             {
                 if (item instanceof Note)
                 {
@@ -69,7 +92,7 @@
                 }
                 else if (item instanceof Folder)
                 {
-                    %><li><a href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId()%>">📁 <%= item.getName() %></a></li><%
+                    %><li><a href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></li><%
                 }
             }
         %>

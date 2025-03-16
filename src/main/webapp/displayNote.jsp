@@ -22,6 +22,9 @@
     .button-container form {
       margin: 0;
     }
+    .breadcrumbs {
+      margin-bottom: 12px;
+    }
     a {
       text-decoration: none;
       color: black;
@@ -55,7 +58,7 @@
     <%
       }
     %>
-    <a href="<%= request.getContextPath() %>/displayNote<%= cumulativePath + "/" + note.getId() %>"><%= note.getName() %></a> /
+    <a href="<%= request.getContextPath() %>/displayNote<%= cumulativePath + "/" + note.getId() %>"><%= note.getName() %></a>
   </div>
   <%
     for (Block b: note.getBlocksList())

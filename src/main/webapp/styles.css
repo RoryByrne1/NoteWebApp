@@ -13,6 +13,9 @@ body {
 .button-container form {
     margin: 0;
 }
+.breadcrumbs {
+    margin-bottom: 12px;
+}
 a {
     text-decoration: none;
     color: black;

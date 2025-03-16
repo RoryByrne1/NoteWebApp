@@ -22,11 +22,9 @@ public class DisplayNoteServlet extends HttpServlet
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        System.out.println("noting");
         Model model = ModelFactory.getModel();
 
         String pathString = request.getPathInfo();
-        System.out.println(pathString);
         List<String> path = List.of(pathString.substring(1).split("/"));
         Note note = model.getNote(path);
 

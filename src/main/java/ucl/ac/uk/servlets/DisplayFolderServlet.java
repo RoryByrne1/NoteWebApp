@@ -28,6 +28,16 @@ public class DisplayFolderServlet extends HttpServlet
         // Get the data from the model
         Model model = ModelFactory.getModel();
 
+        String sortBy = request.getParameter("sortBy");
+        String ascendingString = request.getParameter("ascending");
+
+        if (sortBy == null)
+            sortBy = "name";
+        if (ascendingString == null)
+            ascendingString = "true";
+
+        boolean ascending = ascendingString.equals("true");
+
         String pathString = request.getPathInfo();
         List <String> path;
 
@@ -46,7 +56,10 @@ public class DisplayFolderServlet extends HttpServlet
         // Then add the data to the request object that will be sent to the Java Server Page, so that
         // the JSP can access the data (a Java data structure).
         request.setAttribute("pathString", pathString);
-        request.setAttribute("folder", folder);
+        request.setAttribute("folderName", folder.getName());
+        request.setAttribute("contentsList", folder.getContentsList(sortBy, ascending));
+        request.setAttribute("sortBy", sortBy);
+        request.setAttribute("ascending", ascending);
 
         // Then forward to JSP.
         ServletContext context = getServletContext();

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Folder extends Item
 {
@@ -60,7 +62,8 @@ public class Folder extends Item
 
     public List<Item> getContentsList(String sortBy, boolean ascending)
     {
-        return new ArrayList<>(contents.values());
+        return  Stream.concat(getFoldersList(sortBy, ascending).stream(),
+                              getNotesList(sortBy, ascending).stream()).collect(Collectors.toList());
     }
 
     public List<Folder> getFoldersList(String sortBy, boolean ascending)
@@ -74,6 +77,11 @@ public class Folder extends Item
                 folders.add((Folder) i);
             }
         }
+
+        folders.sort((folder1, folder2) -> {
+            boolean isLess = folder1.isLessThan(folder2, sortBy, ascending);
+            return isLess ? -1 : 1;
+        });
 
         return folders;
     }
@@ -89,6 +97,11 @@ public class Folder extends Item
                 notes.add((Note) i);
             }
         }
+
+        notes.sort((note1, note2) -> {
+            boolean isLess = note1.isLessThan(note2, sortBy, ascending);
+            return isLess ? -1 : 1;
+        });
 
         return notes;
     }
