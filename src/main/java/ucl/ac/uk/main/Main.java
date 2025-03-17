@@ -83,13 +83,12 @@ public class Main
   {
     WebResourceRoot resources = new StandardRoot(context);
     resources.addPreResources(new DirResourceSet(resources, WEB_INF_CLASSES,
-      targetClassesDirectory.toAbsolutePath().toString(), "/"));
+            targetClassesDirectory.toAbsolutePath().toString(), "/"));
     context.setResources(resources);
   }
 
   public static void main(String[] args)
   {
-//    testing();
     final Logger logger = initialiseLogger();
     final Path webappDirectory = Paths.get(DEFAULT_WEBAPP_DIR);
     final Path targetClassesDirectory = Paths.get(DEFAULT_TARGET_CLASSES);
@@ -118,7 +117,7 @@ public class Main
 
   public static void main2(String[] args)
   {
-    System.out.println("yes?!");
+//    System.out.println("yes?!");
 //    Folder folder = new Folder("folder-1", "folder 1", new HashMap<>(), "then", "now");
 //    Note note = new Note("n1", "note 1", new ArrayList<>(), "then", "now");
 //    System.out.println(folder.name);
@@ -129,9 +128,10 @@ public class Main
 //    notes.saveNotes();
 //    Note note = new Note("n2", "note 2", new ArrayList<>(), "then", "now");
 //    notes.addItem(path, note);
-    path.add("folder-1");
-    Folder folder = new Folder("folder-2", "folder 2", new HashMap<>(), "then", "now");
+//    path.add("folder-1");
+    Folder folder = new Folder("f3", "f3", new HashMap<>(), "then", "now");
 //    Note note2 = new Note("n3", "note 3", new ArrayList<>(), "then", "now");
     notes.addItem(path, folder);
+
   }
 }

@@ -28,15 +28,11 @@ public class DisplayFolderServlet extends HttpServlet
         // Get the data from the model
         Model model = ModelFactory.getModel();
 
-        String sortBy = request.getParameter("sortBy");
-        String ascendingString = request.getParameter("ascending");
+        String sortBy = request.getParameter("sort");
+        String order = request.getParameter("order");
 
-        if (sortBy == null)
-            sortBy = "name";
-        if (ascendingString == null)
-            ascendingString = "true";
-
-        boolean ascending = ascendingString.equals("true");
+        if (sortBy == null) sortBy = "name";
+        boolean ascending = (order == null || order.equals("asc"));
 
         String pathString = request.getPathInfo();
         List <String> path;

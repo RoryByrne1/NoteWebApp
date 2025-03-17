@@ -1,1 +1,65 @@
-{"root":{"createdAt":"2025-03-14T10:17:42.722650700Z","contents":{"n2":{"lastEdited":"now","blocks":[],"createdAt":"then","name":"note 2"},"folder-1":{"createdAt":"then","contents":{"n1":{"lastEdited":"now","blocks":[],"createdAt":"then","name":"note 1"},"folder-2":{"createdAt":"then","contents":{},"name":"folder 2","lastEdited":"now"},"n3":{"lastEdited":"now","blocks":[],"createdAt":"then","name":"note 3"}},"name":"folder 1","lastEdited":"2025-03-15T10:37:54.037278300Z"}},"name":"root","lastEdited":"2025-03-15T10:37:54.037278300Z"}}
+{
+  "root": {
+    "createdAt": "2025-03-14T10:17:42.722650700Z",
+    "contents": {
+      "n2": {
+        "lastEdited": "now",
+        "blocks": [],
+        "createdAt": "then",
+        "name": "note 2"
+      },
+      "folder-1": {
+        "createdAt": "then",
+        "contents": {
+          "n1": {
+            "lastEdited": "now",
+            "blocks": [],
+            "createdAt": "then",
+            "name": "note 5"
+          },
+          "folder-2": {
+            "createdAt": "then",
+            "contents": {},
+            "name": "folder 2",
+            "lastEdited": "now"
+          },
+          "n3": {
+            "lastEdited": "now",
+            "blocks": [],
+            "createdAt": "then",
+            "name": "note 3"
+          }
+        },
+        "name": "folder 1",
+        "lastEdited": "2025-03-17T13:25:13.949022100Z"
+      },
+      "f1": {
+        "createdAt": "then",
+        "contents": {},
+        "name": "f1",
+        "lastEdited": "now"
+      },
+      "f2": {
+        "createdAt": "2025-03-17T13:25:18.631487300Z",
+        "contents": {
+          "private": {
+            "createdAt": "2025-03-17T13:25:42.430985800Z",
+            "contents": {},
+            "name": "private",
+            "lastEdited": "2025-03-17T13:25:42.430985800Z"
+          }
+        },
+        "name": "f2",
+        "lastEdited": "2025-03-17T13:25:42.430985800Z"
+      },
+      "f3": {
+        "createdAt": "then",
+        "contents": {},
+        "name": "f3",
+        "lastEdited": "now"
+      }
+    },
+    "name": "root",
+    "lastEdited": "2025-03-17T13:25:18.631487300Z"
+  }
+}

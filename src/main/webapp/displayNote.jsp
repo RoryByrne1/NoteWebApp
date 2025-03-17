@@ -42,11 +42,6 @@
     Note note = (Note) request.getAttribute("note");
   %>
   <h1><%= note.getName()%></h1>
-  <div class="button-container">
-    <form action=".." method="get">
-      <button class="btn" id="editNote">edit note</button>
-    </form>
-  </div>
   <div class="breadcrumbs">
     <a href="<%= request.getContextPath() %>/displayFolder">📁</a> /
     <%
@@ -59,6 +54,11 @@
       }
     %>
     <a href="<%= request.getContextPath() %>/displayNote<%= cumulativePath + "/" + note.getId() %>"><%= note.getName() %></a>
+  </div>
+  <div class="button-container">
+    <form action=".." method="get">
+      <button class="btn" id="editNote">edit note</button>
+    </form>
   </div>
   <%
     for (Block b: note.getBlocksList())

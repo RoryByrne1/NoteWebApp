@@ -12,10 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// ==============================================
-// ADD saveNotes() TO THE END OF EACH METHOD?????
-// ==============================================
-
 public class Model {
     final String jsonFilePath = "data/notes.json";
     private Folder rootDirectory;
@@ -184,8 +180,7 @@ public class Model {
 
     private Folder loadNotes() {
         try {
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(jsonFilePath));
+            JSONObject jsonObject = (JSONObject) (new JSONParser()).parse(new FileReader(jsonFilePath));
             return parseFolder("root", (JSONObject) jsonObject.get("root"));
         } catch (Exception e) {
             e.printStackTrace();

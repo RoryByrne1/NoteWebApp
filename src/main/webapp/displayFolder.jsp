@@ -43,17 +43,9 @@
         List<Item> contentsList = (List<Item>) request.getAttribute("contentsList");
         String sortBy = (String) request.getAttribute("sortBy");
         boolean ascending = (boolean) request.getAttribute("ascending");
-        String parameters =  "?sortBy=" + sortBy + "&ascending=" + ascending;
+        String parameters =  "?sort=" + sortBy + "&order=" + (ascending ? "asc" : "desc");
     %>
     <h1><%= folderName.equals("root") ? "my notes" : folderName %></h1>
-    <div class="button-container">
-        <form action="displayFolder" method="get">
-            <button class="btn" id="addCategory">add folder</button>
-        </form>
-        <form action="displayFolder" method="get">
-            <button class="btn" id="addNote">add note</button>
-        </form>
-    </div>
     <div class="breadcrumbs">
         <a href="<%= request.getContextPath() %>/displayFolder<%= parameters %>">📁</a> /
         <%
@@ -67,20 +59,21 @@
         %>
     </div>
     <div class="sorting">
-        <span>sort by:</span>
+        <span><b>sort:</b></span>
         <%
-            String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "";
-            String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "";
-            String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "";
+            String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "  ";
+            String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "  ";
+            String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "  ";
 
-            boolean nameAscending = sortBy.equals("name") ? !ascending : true;
-            boolean dateAscending = sortBy.equals("createdAt") ? !ascending : true;
-            boolean modifiedAscending = sortBy.equals("lastEdited") ? !ascending : true;
+            String nextOrder = ascending ? "desc" : "asc";
+            String nameOrder = sortBy.equals("name") ? nextOrder : "asc";
+            String dateOrder = sortBy.equals("createdAt") ? nextOrder : "asc";
+            String modifiedOrder = sortBy.equals("lastEdited") ? nextOrder : "asc";
         %>
 
-        <a href="?sortBy=name&ascending=<%= nameAscending %>">name<%= nameArrow %></a> |
-        <a href="?sortBy=createdAt&ascending=<%= dateAscending %>">date created<%= dateArrow %></a> |
-        <a href="?sortBy=lastEdited&ascending=<%= modifiedAscending %>">last modified<%= modifiedArrow %></a>
+        <a href="?sort=name&order=<%= nameOrder %>">name<%= "  " + nameArrow %></a> |
+        <a href="?sort=createdAt&order=<%= dateOrder %>">date created<%= dateArrow %></a> |
+        <a href="?sort=lastEdited&order=<%= modifiedOrder %>">last modified<%= modifiedArrow %></a>
     </div>
     <ul>
         <%
@@ -97,6 +90,15 @@
             }
         %>
     </ul>
+    <script>
+        function addFolder() {
+            let folderName = prompt("enter folder name:");
+            if (folderName) {
+                window.location.href = "<%= request.getContextPath() %>/createFolder<%= pathString + parameters%>&folderName=" + encodeURIComponent(folderName);
+            }
+        }
+    </script>
+    <button type="button" onclick="addFolder()">add folder</button>
 </div>
 </body>
 </html>
