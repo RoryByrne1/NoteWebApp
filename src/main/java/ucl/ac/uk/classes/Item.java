@@ -1,6 +1,10 @@
 package ucl.ac.uk.classes;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
 import java.util.Map;
 
 public abstract class Item
@@ -63,4 +67,20 @@ public abstract class Item
     public String getCreatedAt() { return createdAt; }
 
     public String getLastEdited() { return lastEdited; }
+
+    public static String readableDate(String isoDate) {
+        try {
+            Instant instant = Instant.parse(isoDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                    .withLocale(Locale.UK)
+                    .withZone(ZoneId.systemDefault());
+            return formatter.format(instant);
+        } catch (Exception e) {
+            return "invalid date";
+        }
+    }
+
+    public String getCreatedAtReadable() { return readableDate(createdAt); }
+
+    public String getLastEditedReadable() { return readableDate(lastEdited); }
 }

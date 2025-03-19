@@ -6,10 +6,10 @@ public class TextBlock extends Block
 {
     private String text;
 
-    public TextBlock(String text)
+    public TextBlock()
     {
         super(generateBlockID());
-        this.text = text;
+        this.text = "";
     }
 
     public TextBlock(String id, String text)

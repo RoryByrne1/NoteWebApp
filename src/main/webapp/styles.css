@@ -16,10 +16,10 @@ body {
 .breadcrumbs {
     margin-bottom: 12px;
 }
-a {
+.nice-link {
     text-decoration: none;
     color: black;
 }
-a:hover {
+.nice-link:hover {
     color: #777;
 }

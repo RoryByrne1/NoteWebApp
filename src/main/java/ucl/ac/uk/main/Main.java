@@ -128,10 +128,16 @@ public class Main
 //    notes.saveNotes();
 //    Note note = new Note("n2", "note 2", new ArrayList<>(), "then", "now");
 //    notes.addItem(path, note);
-//    path.add("folder-1");
-    Folder folder = new Folder("f3", "f3", new HashMap<>(), "then", "now");
+    path.add("n2");
+//    Folder folder = new Folder("f3", "f3", new HashMap<>(), "then", "now");
+    Block b = new TextBlock("b1", "this is the text of the first block");
+    Block b2 = new TextBlock("b2", "this is the text of the second block");
+    Block b3 = new ImageBlock("b3", "images/image.png");
+    Block b4 = new TextBlock("b4", "now some text after the image");
+//    notes.addBlockFrom(path, b);
+//    notes.addBlockFrom(path, b2);
+//    notes.addBlockFrom(path, b3);
+//    notes.addBlockFrom(path, b4);
 //    Note note2 = new Note("n3", "note 3", new ArrayList<>(), "then", "now");
-    notes.addItem(path, folder);
-
   }
 }

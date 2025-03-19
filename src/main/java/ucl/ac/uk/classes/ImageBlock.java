@@ -6,10 +6,10 @@ public class ImageBlock extends Block
 {
     private String imagePath;
 
-    public ImageBlock(String imagePath)
+    public ImageBlock()
     {
         super(generateBlockID());
-        this.imagePath = imagePath;
+        this.imagePath = "";
     }
 
     public ImageBlock(String id, String imagePath)

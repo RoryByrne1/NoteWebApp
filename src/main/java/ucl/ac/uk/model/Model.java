@@ -151,26 +151,37 @@ public class Model {
     {
         if (checkNote(path))
             ((Note)resolvePath(path)).addBlock(block);
+        saveNotes();
     }
 
-    public void moveBlock(List<String> path, int fromIndex, int toIndex)
+    public void addBlockFrom(List<String> path, String blockId, Block block, boolean beneath)
     {
-        // use block ids? (Block block, int toIndex)
-        // keep using these indexes?
+        if (checkBlock(path, blockId))
+            ((Note)resolvePath(path)).addBlockFrom(blockId, block, beneath);
+        saveNotes();
+    }
+
+    public void moveBlock(List<String> path, String blockId, boolean down)
+    {
+        if (checkBlock(path, blockId))
+            ((Note) resolvePath(path)).moveBlock(blockId, down);
+        saveNotes();
     }
 
     public void editBlock(List<String> path, String blockId, String newContent) // blockId??
     {
         if (checkBlock(path, blockId))
         {
-
+            ((Note) resolvePath(path)).editBlock(blockId, newContent);
         }
+        saveNotes();
     }
 
     public void deleteBlock(List<String> path, String blockId)
     {
         if (checkBlock(path, blockId))
             ((Note)resolvePath(path)).deleteBlock(blockId);
+        saveNotes();
     }
 
     public Folder getRootDirectory()
@@ -227,6 +238,8 @@ public class Model {
                     block = new TextBlock((String) blockJson.get("id"), (String) blockJson.get("text"));
                 } else if (type.equals("image")) {
                     block = new ImageBlock((String) blockJson.get("id"), (String) blockJson.get("imagePath"));
+                } else if (type.equals("url")) {
+                    block = new URLBlock((String) blockJson.get("id"), (String) blockJson.get("url"));
                 } else {
                     continue;
                 }
