@@ -1,8 +1,8 @@
 package ucl.ac.uk.classes;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,12 +10,13 @@ import java.util.stream.Collectors;
 public class Note extends Item
 {
     private List<Block> blocks;
+    private List<String> categories;
 
     // new note
     public Note(String name)
     {
         super(name);
-        this.blocks = new ArrayList<>();
+        this.blocks = new LinkedList<>();
     }
 
     // loading old note
@@ -39,6 +40,14 @@ public class Note extends Item
                 return true;
         }
         return false;
+    }
+
+    public boolean inCategory(String category) {
+        return categories.contains(category);
+    }
+
+    public boolean inCategories(List<String> categories) {
+        return this.categories.containsAll(categories);
     }
 
     public void addBlock(Block block)

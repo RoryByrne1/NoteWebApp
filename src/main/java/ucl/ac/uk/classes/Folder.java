@@ -33,8 +33,33 @@ public class Folder extends Item
         return name.replaceAll("\\s+", "-");  // replace all whitespace
     }
 
+    public void checkName(Item item) {
+        String originalName = item.getName();
+        String newName = originalName;
+        int count = 1;
+
+        // check for duplicates
+        while (true) {
+            boolean exists = false;
+            for (Item i : contents.values()) {
+                if (i.getName().equals(newName)) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                break;
+            }
+            newName = originalName + count;
+            count++;
+        }
+
+        item.setName(newName);
+    }
+
     public void addItem(Item item)
     {
+        checkName(item);
         contents.put(item.getId(), item);
         super.lastEdited = generateTimeStamp();
     }

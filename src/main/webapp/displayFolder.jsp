@@ -73,8 +73,12 @@
                 window.location.href = "<%= request.getContextPath() %>/createFolder<%= pathString + parameters%>&folderName=" + encodeURIComponent(folderName);
             }
         }
+        function addNote() {
+            window.location.href = "<%= request.getContextPath() %>/createNote<%= pathString%>?noteName=untitled";
+        }
     </script>
     <button type="button" onclick="addFolder()">add folder</button>
+    <button type="button" onclick="addNote()">add note</button>
 </div>
 </body>
 </html>
