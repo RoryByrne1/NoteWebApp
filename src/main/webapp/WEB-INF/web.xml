@@ -4,15 +4,4 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
-  <servlet>
-    <servlet-name>DisplayNotesServlet</servlet-name>
-    <servlet-class>ucl.ac.uk.servlets.DisplayNotesServlet</servlet-class>
-  </servlet>
-
-  <!-- Servlet mapping -->
-  <servlet-mapping>
-    <servlet-name>DisplayNotesServlet</servlet-name>
-    <url-pattern>/displayNotes.html</url-pattern>
-  </servlet-mapping>
-
 </web-app>

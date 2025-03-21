@@ -35,7 +35,7 @@
         if (b instanceof TextBlock) { %>
           <p><%= ((TextBlock) b).getText()%></p>
         <% } else if (b instanceof ImageBlock) { %>
-          <p><%= ((ImageBlock) b).getImagePath()%></p>
+          <img src="/<%= ((ImageBlock) b).getImagePath()%>" width="300" alt="<%= ((ImageBlock) b).getImagePath()%> 1">
         <% } else if (b instanceof URLBlock) { %>
           <a href="<%= ((URLBlock) b).getURL() %>" target="_blank"><%= ((URLBlock) b).getURL() %></a>
         <%}%>

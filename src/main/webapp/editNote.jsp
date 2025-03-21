@@ -8,6 +8,11 @@
     <title>edit <%=note.getName()%></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/editing.css">
+    <style>
+        .image-block {
+            margin: 5px;
+        }
+    </style>
 </head>
 <script>
     function updateBlockType() {
@@ -22,7 +27,7 @@
         <b>last edited:</b> <%= note.getLastEditedReadable() %>
     </div>
 
-    <form action="<%= request.getContextPath() %>/editNote<%= request.getAttribute("pathString") %>" method="post">
+    <form action="<%= request.getContextPath() %>/editNote<%= request.getAttribute("pathString") %>" method="post" enctype="multipart/form-data">
         <div class="name-container">
             <input type="text" id="name" name="name" value="<%= note.getName() %>" placeholder="enter name"/>
         </div>
@@ -62,7 +67,10 @@
             <% if (b instanceof TextBlock) { %>
                 <textarea name="block_<%= b.getId() %>" placeholder="enter text"><%= ((TextBlock) b).getText() %></textarea>
             <% } else if (b instanceof ImageBlock) { %>
-                <p><%= ((ImageBlock) b).getImagePath() %></p>
+                <div class="image-block">
+                    <p><%= ((ImageBlock) b).getImagePath() %></p>
+                    <input type="file" name="imageUpload_<%= b.getId() %>" accept="image/*">
+                </div>
             <% } else if (b instanceof URLBlock) { %>
                 <textarea name="block_<%= b.getId() %>" placeholder="enter url"><%= ((URLBlock) b).getURL() %></textarea>
             <% } %>

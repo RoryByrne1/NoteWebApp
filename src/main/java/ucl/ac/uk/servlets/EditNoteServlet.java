@@ -1,11 +1,14 @@
 package ucl.ac.uk.servlets;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,8 +17,15 @@ import ucl.ac.uk.classes.*;
 import ucl.ac.uk.model.Model;
 import ucl.ac.uk.model.ModelFactory;
 
+import jakarta.servlet.http.Part;
+
 
 @WebServlet("/editNote/*")
+@MultipartConfig (
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,      // 10 MB
+        maxRequestSize = 1024 * 1024 * 100   // 100 MB
+)
 public class EditNoteServlet extends HttpServlet
 {
     @Override
@@ -55,10 +65,14 @@ public class EditNoteServlet extends HttpServlet
 
         // block updates
         for (Block block : model.getNote(path).getBlocksList()) {
-            String blockContent = request.getParameter("block_" + block.getId());
-            if (blockContent != null)
+            if (block instanceof TextBlock || block instanceof URLBlock)
             {
+                String blockContent = request.getParameter("block_" + block.getId());
                 model.editBlock(path, block.getId(), blockContent);
+            }
+            else if (block instanceof ImageBlock)
+            {
+                handleImageUpload(request, response, block);
             }
         }
 
@@ -103,5 +117,56 @@ public class EditNoteServlet extends HttpServlet
         // save changes and redirect to the edit page
         model.saveNotes();
         response.sendRedirect(request.getContextPath() + "/editNote" + pathString);
+    }
+    public void handleImageUpload(HttpServletRequest request, HttpServletResponse response, Block block)
+            throws IOException, ServletException {
+        Part imagePart = request.getPart("imageUpload_" + block.getId());
+        if (imagePart != null && imagePart.getSize() > 0) {
+            String originalFileName = extractFileName(imagePart);
+            String fileName = generateUniqueFileName(originalFileName);
+            String uploadPath = getServletContext().getRealPath("/images");
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            File imageFile = new File(uploadPath + File.separator + fileName);
+            try (InputStream input = imagePart.getInputStream(); FileOutputStream output = new FileOutputStream(imageFile)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = input.read(buffer)) != -1) {
+                    output.write(buffer, 0, bytesRead);
+                }
+            }
+            ((ImageBlock) block).setImagePath("images/" + fileName);
+        }
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        for (String content : contentDisposition.split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
+
+    private String generateUniqueFileName(String originalFileName) {
+        File file;
+        String baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
+        String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+        int counter = 0;
+
+        // check if the file already exists and generate a new name if needed
+        file = new File(getServletContext().getRealPath("/images") + File.separator + originalFileName);
+        while (file.exists())
+        {
+            counter++;
+            String newFileName = baseName + (counter) + extension;
+            file = new File(getServletContext().getRealPath("/images") + File.separator + newFileName);
+        }
+
+        return baseName + (counter == 0? "" : counter) + extension;
     }
 }

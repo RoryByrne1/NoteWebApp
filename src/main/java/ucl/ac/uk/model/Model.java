@@ -246,6 +246,7 @@ public class Model {
                 blocks.add(block);
             }
         }
+
         return new Note(id, name, blocks, createdAt, lastEdited);
     }
 
