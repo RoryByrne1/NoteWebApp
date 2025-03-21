@@ -7,6 +7,11 @@
   %>
   <title><%=note.getName()%></title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
+  <style>
+    button {
+      border-radius: 0;
+    }
+  </style>
 </head>
 <body>
 <div>

@@ -12,6 +12,15 @@
         .image-block {
             margin: 5px;
         }
+        button {
+            border-radius: 0;
+        }
+        .add-block-select {
+            border-radius: 0;
+        }
+        .browse-button {
+            border-radius: 0;
+        }
     </style>
 </head>
 <script>
@@ -69,7 +78,7 @@
             <% } else if (b instanceof ImageBlock) { %>
                 <div class="image-block">
                     <p><%= ((ImageBlock) b).getImagePath() %></p>
-                    <input type="file" name="imageUpload_<%= b.getId() %>" accept="image/*">
+                    <input class="browse-button" type="file" name="imageUpload_<%= b.getId() %>" accept="image/*">
                 </div>
             <% } else if (b instanceof URLBlock) { %>
                 <textarea name="block_<%= b.getId() %>" placeholder="enter url"><%= ((URLBlock) b).getURL() %></textarea>

@@ -23,3 +23,6 @@ body {
 .nice-link:hover {
     color: #777;
 }
+button {
+    border-radius: 0;
+}

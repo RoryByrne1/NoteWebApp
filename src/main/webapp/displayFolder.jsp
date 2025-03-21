@@ -10,6 +10,19 @@
     %>
     <title><%=folderName.equals("root")? "my notes" : folderName%></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
+    <style>
+        .items {
+            margin-top: 10px;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .item {
+            margin-bottom: 1px;
+        }
+        button {
+            border-radius: 0;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -51,21 +64,32 @@
         <a class="nice-link" href="?sort=createdAt&order=<%= dateOrder %>">date created<%= dateArrow %></a> |
         <a class="nice-link" href="?sort=lastEdited&order=<%= modifiedOrder %>">last modified<%= modifiedArrow %></a>
     </div>
-    <ul>
+<%--    <ul>--%>
+<%--        <%--%>
+<%--            for (Item item : contentsList)--%>
+<%--            {--%>
+<%--                if (item instanceof Note)--%>
+<%--                {--%>
+<%--                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId()%>">📄 <%= item.getName() %></a></li><%--%>
+<%--                }--%>
+<%--                else if (item instanceof Folder)--%>
+<%--                {--%>
+<%--                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></li><%--%>
+<%--                }--%>
+<%--            }--%>
+<%--        %>--%>
+<%--    </ul>--%>
+    <div class="items">
         <%
-            for (Item item : contentsList)
-            {
-                if (item instanceof Note)
-                {
-                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId()%>">📄 <%= item.getName() %></a></li><%
-                }
-                else if (item instanceof Folder)
-                {
-                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></li><%
-                }
-            }
+        for (Item item : contentsList)
+        {
+            if (item instanceof Note)
+                {%><div class="item"><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId()%>">📄 <%= item.getName() %></a></div><%}
+            else if (item instanceof Folder)
+                {%><div class="item"><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></div><%}
+        }
         %>
-    </ul>
+    </div>
     <script>
         function addFolder() {
             let folderName = prompt("enter folder name:");
