@@ -64,21 +64,6 @@
         <a class="nice-link" href="?sort=createdAt&order=<%= dateOrder %>">date created<%= dateArrow %></a> |
         <a class="nice-link" href="?sort=lastEdited&order=<%= modifiedOrder %>">last modified<%= modifiedArrow %></a>
     </div>
-<%--    <ul>--%>
-<%--        <%--%>
-<%--            for (Item item : contentsList)--%>
-<%--            {--%>
-<%--                if (item instanceof Note)--%>
-<%--                {--%>
-<%--                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId()%>">📄 <%= item.getName() %></a></li><%--%>
-<%--                }--%>
-<%--                else if (item instanceof Folder)--%>
-<%--                {--%>
-<%--                    %><li><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></li><%--%>
-<%--                }--%>
-<%--            }--%>
-<%--        %>--%>
-<%--    </ul>--%>
     <div class="items">
         <%
         for (Item item : contentsList)

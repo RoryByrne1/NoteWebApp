@@ -31,9 +31,9 @@
 <body>
 <div class="note-container">
     <div class="metadata">
-        <b>created:</b> <%= note.getCreatedAtReadable() %>
+        <b>created:</b> <%= note.getCreatedAtReadable(true) %>
         <br>
-        <b>last edited:</b> <%= note.getLastEditedReadable() %>
+        <b>last edited:</b> <%= note.getLastEditedReadable(true) %>
     </div>
 
     <form action="<%= request.getContextPath() %>/editNote<%= request.getAttribute("pathString") %>" method="post" enctype="multipart/form-data">

@@ -14,8 +14,6 @@ public abstract class Item
     public final String createdAt;
     public String lastEdited;
 
-    // MAYBE ADD PATH?????
-
     public Item(String name)
     {
         this.name = name;
@@ -47,8 +45,8 @@ public abstract class Item
     {
         boolean result = switch (sortBy) {
             case "name" -> name.compareToIgnoreCase(other.getName()) < 0;
-            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) < 0;
-            case "lastEdited" -> lastEdited.compareTo(other.getLastEdited()) < 0;
+            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) > 0; // newest to oldest
+            case "lastEdited" -> lastEdited.compareTo(other.getLastEdited()) > 0; // newest to oldest
             default -> throw new IllegalArgumentException("invalid sortBy parameter: " + sortBy);
         };
         return ascending == result;
@@ -68,19 +66,26 @@ public abstract class Item
 
     public String getLastEdited() { return lastEdited; }
 
-    public static String readableDate(String isoDate) {
+    public static String readableDate(String isoDate, boolean longDate) {
         try {
             Instant instant = Instant.parse(isoDate);
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-                    .withLocale(Locale.UK)
-                    .withZone(ZoneId.systemDefault());
+            DateTimeFormatter formatter;
+            if (longDate)
+                formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm:ss")
+                        .withLocale(Locale.UK)
+                        .withZone(ZoneId.systemDefault());
+            else
+                 formatter = DateTimeFormatter.ofPattern("d/M/yy")
+                         .withLocale(Locale.UK)
+                         .withZone(ZoneId.systemDefault());
+
             return formatter.format(instant);
         } catch (Exception e) {
             return "invalid date";
         }
     }
 
-    public String getCreatedAtReadable() { return readableDate(createdAt); }
+    public String getCreatedAtReadable(boolean longDate) { return readableDate(createdAt, longDate); }
 
-    public String getLastEditedReadable() { return readableDate(lastEdited); }
+    public String getLastEditedReadable(boolean longDate) { return readableDate(lastEdited, longDate); }
 }

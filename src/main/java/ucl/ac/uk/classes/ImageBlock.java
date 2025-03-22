@@ -18,6 +18,11 @@ public class ImageBlock extends Block
         this.imagePath = imagePath;
     }
 
+    public boolean search(String query)
+    {
+        return imagePath.contains(query);
+    }
+
     public void setImagePath(String imagePath)
     {
         this.imagePath = imagePath;

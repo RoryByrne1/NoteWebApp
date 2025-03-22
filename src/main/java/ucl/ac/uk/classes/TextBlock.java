@@ -18,6 +18,11 @@ public class TextBlock extends Block
         this.text = text;
     }
 
+    public boolean search(String query)
+    {
+        return text.contains(query);
+    }
+
     public void setText(String text)
     {
         this.text = text;

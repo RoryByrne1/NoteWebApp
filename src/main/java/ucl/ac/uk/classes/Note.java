@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class Note extends Item
 {
     private List<Block> blocks;
+    private static final int summaryLength = 50;
 
     // new note
     public Note(String name)
@@ -28,6 +29,16 @@ public class Note extends Item
         return "n" + Instant.now().toEpochMilli();
     }
 
+    public boolean search(String query)
+    {
+        for (Block b: blocks)
+        {
+            if (b.search(query))
+                return true;
+        }
+        return false;
+    }
+
     public boolean checkBlock(String blockId)
     {
         for (Block b: blocks)
@@ -43,6 +54,7 @@ public class Note extends Item
         if (!checkBlock(block.getId()))
         {
             blocks.add(block);
+            updateLastEdited();
         }
     }
 
@@ -82,6 +94,7 @@ public class Note extends Item
             Collections.swap(blocks, i, i+1);
         else
             Collections.swap(blocks, i-1, i);
+        updateLastEdited();
     }
 
     public void editBlock(String blockId, String newContent)
@@ -93,11 +106,26 @@ public class Note extends Item
             ((ImageBlock) b).setImagePath(newContent);
         if (b instanceof URLBlock)
             ((URLBlock) b).setURL(newContent);
+        updateLastEdited();
     }
 
     public void deleteBlock(String blockId)
     {
         blocks.remove(getBlock(blockId));
+    }
+
+    public String getSummary()
+    {
+        StringBuilder summary = new StringBuilder();
+        for (Block b: blocks)
+        {
+            if (b instanceof TextBlock)
+            {
+                summary.append(((TextBlock) b).getText());
+                break;
+            }
+        }
+        return summary.length() > summaryLength? summary.substring(0, summaryLength) + "..." : summary.toString();
     }
 
     public Block getBlock(String blockId)

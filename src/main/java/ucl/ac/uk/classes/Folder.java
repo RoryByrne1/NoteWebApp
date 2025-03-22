@@ -61,7 +61,7 @@ public class Folder extends Item
     {
         checkName(item);
         contents.put(item.getId(), item);
-        super.lastEdited = generateTimeStamp();
+        updateLastEdited();
     }
 
     public Boolean checkItem(String itemId)
@@ -79,9 +79,9 @@ public class Folder extends Item
         return contents.get(itemId);
     }
 
-    public void setItemList(Map<String, Item> itemList)
+    public void setContents(Map<String, Item> itemMap)
     {
-        this.contents = itemList;
+        this.contents = itemMap;
         updateLastEdited();
     }
 

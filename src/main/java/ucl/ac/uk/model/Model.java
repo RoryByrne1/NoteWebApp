@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Model {
     final String jsonFilePath = "data/notes.json";
@@ -101,6 +102,41 @@ public class Model {
         if (checkNote(path))
             return (Note) resolvePath(path);
         return null;
+    }
+
+    // list of {"note":Note, "path":List<String>}
+    public List<Map<String, Object>> searchNotesFrom(List<String> path, String sortBy, boolean ascending, String query)
+    {
+        List<Map<String, Object>> notes = new ArrayList<>();
+
+        if (!checkFolder(path))
+            return null;
+
+        for (Item item: ((Folder)resolvePath(path)).getContentsList(sortBy, ascending))
+        {
+            if (item instanceof Note)
+                if (((Note)item).search(query))
+                    notes.add(Map.of("note", item,
+                                     "path", path));
+            if (item instanceof Folder)
+            {
+                List<String> newPath = new ArrayList<>(path);
+                newPath.add(item.getId());
+                notes.addAll(searchNotesFrom(newPath, sortBy, ascending, query));
+            }
+        }
+
+        notes.sort((map1, map2) -> {
+            boolean isLess = ((Item)map1.get("note")).isLessThan(((Item)map2.get("note")), sortBy, ascending);
+            return isLess ? -1 : 1;
+        });
+
+        return notes;
+    }
+
+    public List<Map<String, Object>> searchNotes(String sortBy, boolean ascending, String query)
+    {
+        return searchNotesFrom(new ArrayList<>(), sortBy, ascending, query);
     }
 
     public void addItem(List<String> path, Item folder)
@@ -203,21 +239,21 @@ public class Model {
         String name = (String) jsonObject.get("name");
         String createdAt = (String) jsonObject.get("createdAt");
         String lastEdited = (String) jsonObject.get("lastEdited");
-        Folder folder = new Folder(id, name, new HashMap<>(),createdAt, lastEdited);
 
         JSONObject contents = (JSONObject) jsonObject.get("contents");
+        Map<String, Item> itemsMap = new HashMap<>();
         if (contents != null) {
             for (Object key : contents.keySet()) {
                 String itemId = (String) key;
                 JSONObject item = (JSONObject) contents.get(itemId);
                 if (item.containsKey("contents")) {
-                    folder.addItem(parseFolder(itemId, item));
+                    itemsMap.put(itemId, parseFolder(itemId, item));
                 } else {
-                    folder.addItem(parseNote(itemId, item));
+                    itemsMap.put(itemId, parseNote(itemId, item));
                 }
             }
         }
-        return folder;
+        return new Folder(id, name, itemsMap, createdAt, lastEdited);
     }
 
     private Note parseNote(String id, JSONObject noteJson) {

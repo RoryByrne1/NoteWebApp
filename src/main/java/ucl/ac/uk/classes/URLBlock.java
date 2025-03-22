@@ -18,6 +18,11 @@ public class URLBlock extends Block
         this.url = url;
     }
 
+    public boolean search(String query)
+    {
+        return url.contains(query);
+    }
+
     public void setURL(String url)
     {
         this.url = url;

@@ -17,10 +17,13 @@ public abstract class Block
         return "b" + Instant.now().toEpochMilli();
     }
 
+
     public String getId()
     {
         return id;
     }
+
+    public abstract boolean search(String query);
 
     public abstract Map<String, Object> toJson();
 }

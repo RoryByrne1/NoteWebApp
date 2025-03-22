@@ -114,6 +114,12 @@ public class EditNoteServlet extends HttpServlet
             }
         }
 
+        // update last edited of each folder the note is in
+        for (int i = 0; i <= path.size(); i++) {
+            List<String> subPath = path.subList(0, i);
+            model.resolvePath(subPath).updateLastEdited();
+        }
+
         // save changes and redirect to the edit page
         model.saveNotes();
         response.sendRedirect(request.getContextPath() + "/editNote" + pathString);
