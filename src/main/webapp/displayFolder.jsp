@@ -10,19 +10,7 @@
     %>
     <title><%=folderName.equals("root")? "my notes" : folderName%></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
-    <style>
-        .items {
-            margin-top: 10px;
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-        .item {
-            margin-bottom: 1px;
-        }
-        button {
-            border-radius: 0;
-        }
-    </style>
+    <jsp:include page="header.jsp"/>
 </head>
 <body>
 <div>
@@ -35,35 +23,26 @@
         String parameters =  "?sort=" + sortBy + "&order=" + (ascending ? "asc" : "desc");
     %>
     <h1><%= folderName.equals("root") ? "my notes" : folderName %></h1>
+
+    <div class="time-details">
+        created: <%= request.getAttribute("folderCreatedAt") %> | last modified: <%= request.getAttribute("folderLastEdited") %>
+    </div>
+
     <div class="breadcrumbs">
         <a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= parameters %>">📁</a> /
         <%
-            String cumulativePath = "";
+            StringBuilder cumulativePath = new StringBuilder();
             for (int i = 0; i < pathComponents.length; i++) {
-                cumulativePath += "/" + pathComponents[i];
+                cumulativePath.append("/").append(pathComponents[i]);
         %>
         <a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= cumulativePath + parameters%>"><%= pathComponents[i].replace("-", " ")%></a> /
         <%
             }
         %>
     </div>
-    <div class="sorting">
-        <span><b>sort:</b></span>
-        <%
-            String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "  ";
-            String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "  ";
-            String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "  ";
 
-            String nextOrder = ascending ? "desc" : "asc";
-            String nameOrder = sortBy.equals("name") ? nextOrder : "asc";
-            String dateOrder = sortBy.equals("createdAt") ? nextOrder : "asc";
-            String modifiedOrder = sortBy.equals("lastEdited") ? nextOrder : "asc";
-        %>
+    <jsp:include page="sorting.jsp"/>
 
-        <a class="nice-link" href="?sort=name&order=<%= nameOrder %>">name<%= "  " + nameArrow %></a> |
-        <a class="nice-link" href="?sort=createdAt&order=<%= dateOrder %>">date created<%= dateArrow %></a> |
-        <a class="nice-link" href="?sort=lastEdited&order=<%= modifiedOrder %>">last modified<%= modifiedArrow %></a>
-    </div>
     <div class="items">
         <%
         for (Item item : contentsList)
@@ -75,6 +54,7 @@
         }
         %>
     </div>
+
     <script>
         function addFolder() {
             let folderName = prompt("enter folder name:");
@@ -86,8 +66,9 @@
             window.location.href = "<%= request.getContextPath() %>/createNote<%= pathString%>?noteName=untitled";
         }
     </script>
-    <button type="button" onclick="addFolder()">add folder</button>
-    <button type="button" onclick="addNote()">add note</button>
+
+    <button type="button" title="create a new folder in this folder" onclick="addFolder()">add folder</button>
+    <button type="button" title="create a new note in this folder" onclick="addNote()">add note</button>
 </div>
 </body>
 </html>

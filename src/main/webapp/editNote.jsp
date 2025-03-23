@@ -8,20 +8,7 @@
     <title>edit <%=note.getName()%></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/editing.css">
-    <style>
-        .image-block {
-            margin: 5px;
-        }
-        button {
-            border-radius: 0;
-        }
-        .add-block-select {
-            border-radius: 0;
-        }
-        .browse-button {
-            border-radius: 0;
-        }
-    </style>
+    <jsp:include page="header.jsp"/>
 </head>
 <script>
     function updateBlockType() {
@@ -40,6 +27,9 @@
         <div class="name-container">
             <input type="text" id="name" name="name" value="<%= note.getName() %>" placeholder="enter name"/>
         </div>
+        <label>
+            pin: <input class="pin-box" type="checkbox" name="pinned" <%= note.getPinned() ? "checked" : "" %> />
+        </label>
         <div class="top-buttons-container">
             <input type="hidden" id="newBlockType"  name="newBlockType" value="text">
             <select class="add-block-select" title="select block type to add" id="blockType" onchange="updateBlockType()">

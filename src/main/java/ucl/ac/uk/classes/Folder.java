@@ -17,7 +17,7 @@ public class Folder extends Item
     public Folder(String name)
     {
         super(name);
-        this.contents = new HashMap<>();
+        contents = new HashMap<>();
     }
 
     // loading old note

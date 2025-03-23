@@ -63,6 +63,10 @@ public class EditNoteServlet extends HttpServlet
             model.editItemName(path, newName);
         }
 
+        // pin update
+        boolean isPinned = request.getParameter("pinned") != null;
+        model.pin(path, isPinned);
+
         // block updates
         for (Block block : model.getNote(path).getBlocksList()) {
             if (block instanceof TextBlock || block instanceof URLBlock)

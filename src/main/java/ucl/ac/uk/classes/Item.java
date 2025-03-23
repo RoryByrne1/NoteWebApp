@@ -17,9 +17,9 @@ public abstract class Item
     public Item(String name)
     {
         this.name = name;
-        this.id = generateId();
-        this.createdAt = generateTimeStamp();
-        this.lastEdited = generateTimeStamp();
+        id = generateId();
+        createdAt = generateTimeStamp();
+        lastEdited = generateTimeStamp();
     }
 
     public Item(String id, String name, String createdAt, String lastEdited)
@@ -45,8 +45,8 @@ public abstract class Item
     {
         boolean result = switch (sortBy) {
             case "name" -> name.compareToIgnoreCase(other.getName()) < 0;
-            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) > 0; // newest to oldest
-            case "lastEdited" -> lastEdited.compareTo(other.getLastEdited()) > 0; // newest to oldest
+            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) < 0;
+            case "lastEdited" -> lastEdited.compareTo(other.getLastEdited()) < 0;
             default -> throw new IllegalArgumentException("invalid sortBy parameter: " + sortBy);
         };
         return ascending == result;
@@ -75,7 +75,7 @@ public abstract class Item
                         .withLocale(Locale.UK)
                         .withZone(ZoneId.systemDefault());
             else
-                 formatter = DateTimeFormatter.ofPattern("d/M/yy")
+                 formatter = DateTimeFormatter.ofPattern("dd/MM/yy")
                          .withLocale(Locale.UK)
                          .withZone(ZoneId.systemDefault());
 

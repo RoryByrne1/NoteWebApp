@@ -52,6 +52,12 @@ public class CreateNoteServlet extends HttpServlet {
             model.addBlock(newPath, new TextBlock());
         }
 
+        // update last edited of each folder the note is in
+        for (int i = 0; i <= path.size(); i++) {
+            List<String> subPath = path.subList(0, i);
+            model.resolvePath(subPath).updateLastEdited();
+        }
+
         response.sendRedirect("/editNote" + pathString + "/" + newNote.getId());
     }
 }

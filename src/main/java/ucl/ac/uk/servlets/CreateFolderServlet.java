@@ -46,6 +46,12 @@ public class CreateFolderServlet extends HttpServlet {
             model.addItem(path, new Folder(folderName));
         }
 
+        // update last edited of each folder the note is in
+        for (int i = 0; i <= path.size(); i++) {
+            List<String> subPath = path.subList(0, i);
+            model.resolvePath(subPath).updateLastEdited();
+        }
+
         response.sendRedirect("/displayFolder" + pathString);
     }
 }

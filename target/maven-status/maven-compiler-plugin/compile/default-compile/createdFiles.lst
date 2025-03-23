@@ -14,3 +14,4 @@ ucl\ac\uk\servlets\DisplayFolderServlet.class
 ucl\ac\uk\model\ModelFactory.class
 ucl\ac\uk\servlets\DisplayNoteServlet.class
 ucl\ac\uk\servlets\EditNoteServlet.class
+ucl\ac\uk\servlets\HomeServlet.class

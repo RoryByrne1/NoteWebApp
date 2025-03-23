@@ -9,7 +9,7 @@ public class ImageBlock extends Block
     public ImageBlock()
     {
         super(generateBlockID());
-        this.imagePath = "";
+        imagePath = "";
     }
 
     public ImageBlock(String id, String imagePath)

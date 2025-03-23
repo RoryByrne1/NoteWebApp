@@ -6,25 +6,7 @@
 <head>
   <title>search notes</title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
-  <style>
-    #query {
-      width: 30%;
-      font-size: 24px;
-      font-weight: bold;
-      border: 1px solid #ccc;
-      outline: none;
-      padding: 4px 4px;
-      background-color: transparent;
-      color: black;
-      font-family: inherit;
-    }
-    .query-button {
-      border-radius: 0;
-    }
-    .note {
-      margin-bottom: 20px;
-    }
-  </style>
+  <jsp:include page="header.jsp"/>
 </head>
 <body>
 <div>
@@ -35,32 +17,20 @@
     String query = (String) request.getAttribute("query");
     String parameters =  "?sort=" + sortBy + "&order=" + (ascending ? "asc" : "desc") + "&q=" + query;
   %>
+
   <form action="<%= request.getContextPath() %>/search<%= parameters %>" method="get">
     <input type="hidden" name="sort" value="<%= sortBy %>">
     <input type="hidden" name="order" value="<%= ascending ? "asc" : "desc" %>">
     <input type="text" id="query" name="q" value="<%= query %>" placeholder="enter search query"/>
-    <button class="query-button" title="return to note display" id="back">search</button>
+    <button class="query-button" title="search notes for query" id="search">search</button>
   </form>
-  <div class="sorting">
-    <span><b>sort:</b></span>
-    <%
-      String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "  ";
-      String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "  ";
-      String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "  ";
 
-      String nextOrder = ascending ? "desc" : "asc";
-      String nameOrder = sortBy.equals("name") ? nextOrder : "asc";
-      String dateOrder = sortBy.equals("createdAt") ? nextOrder : "asc";
-      String modifiedOrder = sortBy.equals("lastEdited") ? nextOrder : "asc";
-    %>
+  <jsp:include page="sorting.jsp"/>
 
-    <a class="nice-link" href="?sort=name&order=<%= nameOrder %>&q=<%=query%>">name<%= "  " + nameArrow %></a> |
-    <a class="nice-link" href="?sort=createdAt&order=<%= dateOrder %>&q=<%=query%>">date created<%= dateArrow %></a> |
-    <a class="nice-link" href="?sort=lastEdited&order=<%= modifiedOrder %>&q=<%=query%>">last modified<%= modifiedArrow %></a>
-  </div>
   <div>
     <p><%= notesMapList.size() %> results</p>
   </div>
+
   <div class="notes">
     <%
       Note note;

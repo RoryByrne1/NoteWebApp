@@ -139,6 +139,34 @@ public class Model {
         return searchNotesFrom(new ArrayList<>(), sortBy, ascending, query);
     }
 
+    public void pin(List<String> path, boolean isPinned)
+    {
+        if (checkNote(path))
+            ((Note) resolvePath(path)).setPinned(isPinned);
+        saveNotes();
+    }
+
+    public List<Map<String, Object>> getPinned(String sortBy, boolean ascending)
+    {
+        List<Map<String, Object>> notes = searchNotes(sortBy, ascending, "");
+        List<Map<String, Object>> pinned = new ArrayList<>();
+        for (Map<String, Object> noteMap: notes)
+        {
+            if (((Note) noteMap.get("note")).getPinned())
+                pinned.add(noteMap);
+        }
+        return pinned;
+    }
+
+    public List<Map<String, Object>> getRecents(int quantity)
+    {
+        List<Map<String, Object>> notes = searchNotes("lastEdited",false, "");
+        System.out.println(notes);
+        if (notes.size() > quantity)
+            return notes.subList(0, quantity);
+        return notes;
+    }
+
     public void addItem(List<String> path, Item folder)
     {
         if (checkFolder(path))
@@ -260,6 +288,7 @@ public class Model {
         String name = (String) noteJson.get("name");
         String createdAt = (String) noteJson.get("createdAt");
         String lastEdited = (String) noteJson.get("lastEdited");
+        boolean pinned = (boolean) noteJson.get("pinned");
 
         JSONArray blocksJson = (JSONArray) noteJson.get("blocks");
         List<Block> blocks = new ArrayList<>();
@@ -283,7 +312,7 @@ public class Model {
             }
         }
 
-        return new Note(id, name, blocks, createdAt, lastEdited);
+        return new Note(id, name, blocks, createdAt, lastEdited, pinned);
     }
 
     public void saveNotes() {

@@ -9,7 +9,7 @@ public class URLBlock extends Block
     public URLBlock()
     {
         super(generateBlockID());
-        this.url = "";
+        url = "";
     }
 
     public URLBlock(String id, String url)

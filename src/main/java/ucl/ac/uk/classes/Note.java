@@ -8,19 +8,22 @@ public class Note extends Item
 {
     private List<Block> blocks;
     private static final int summaryLength = 50;
+    private boolean pinned;
 
     // new note
     public Note(String name)
     {
         super(name);
-        this.blocks = new LinkedList<>();
+        blocks = new LinkedList<>();
+        pinned = false;
     }
 
     // loading old note
-    public Note(String id, String name, List<Block> blocks, String createdAt, String lastEdited)
+    public Note(String id, String name, List<Block> blocks, String createdAt, String lastEdited, boolean pinned)
     {
         super(id, name, createdAt, lastEdited);
         this.blocks = blocks;
+        this.pinned = pinned;
     }
 
     @Override
@@ -128,6 +131,10 @@ public class Note extends Item
         return summary.length() > summaryLength? summary.substring(0, summaryLength) + "..." : summary.toString();
     }
 
+    public boolean getPinned() { return pinned; }
+
+    public void setPinned(boolean isPinned) { pinned = isPinned; }
+
     public Block getBlock(String blockId)
     {
         Block block = null;
@@ -159,7 +166,8 @@ public class Note extends Item
                 "name", name,
                 "blocks", blocks.stream().map(Block::toJson).collect(Collectors.toList()),
                 "createdAt", createdAt,
-                "lastEdited", lastEdited
+                "lastEdited", lastEdited,
+                "pinned", pinned
         );
     }
 }

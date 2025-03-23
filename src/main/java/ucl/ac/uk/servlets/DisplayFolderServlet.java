@@ -50,6 +50,8 @@ public class DisplayFolderServlet extends HttpServlet
         request.setAttribute("pathString", pathString);
         request.setAttribute("folderName", folder.getName());
         request.setAttribute("contentsList", folder.getContentsList(sortBy, ascending));
+        request.setAttribute("folderCreatedAt", folder.getCreatedAtReadable(false));
+        request.setAttribute("folderLastEdited", folder.getLastEditedReadable(false));
         request.setAttribute("sortBy", sortBy);
         request.setAttribute("ascending", ascending);
 

@@ -1,3 +1,4 @@
+/* ============ GENERAL CSS ============ */
 h1 {
     margin-bottom: 5px;
 }
@@ -26,3 +27,167 @@ body {
 button {
     border-radius: 0;
 }
+.notes-container {
+    margin-left: 30px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+.time-details {
+    color: #444;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+/* ===================================== */
+/* ============ HEADER CSS ============= */
+.header {
+    border-bottom: 1px solid black;
+    padding: 10px;
+    display: flex;
+    justify-content: start;
+    gap: 30px;
+}
+.header-button {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.header-button:hover {
+    color: #777;
+}
+.header-button-smaller {
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.header-button-smaller:hover {
+    color: #777;
+}
+.date {
+    margin-left: auto;
+    color: black;
+}
+/* ===================================== */
+/* ============ FOLDER CSS ============= */
+.items {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+.item {
+    margin-bottom: 1px;
+}
+button {
+    border-radius: 0;
+}
+/* ===================================== */
+/* ============ SEARCH CSS ============= */
+#query {
+    width: 30%;
+    font-size: 24px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 4px 4px;
+    background-color: transparent;
+    color: black;
+    font-family: inherit;
+    margin-top: 25px;
+}
+.query-button {
+    border-radius: 0;
+}
+.note {
+    margin-bottom: 20px;
+}
+/* ===================================== */
+/* ============ EDITING CSS ============ */
+.note-container {
+    width: 600px;
+}
+.metadata {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.name-container {
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+}
+#name {
+    width: 100%;
+    margin-left: 4px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    padding: 4px 0;
+    background-color: transparent;
+    color: black;
+    font-family: inherit;
+}
+.pin-box {
+    margin-bottom: 10px;
+}
+.top-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+.spacer {
+    flex-grow: 1;
+}
+.block {
+    background-color: #f1f1f1;
+    border: 1px solid #a0a0a0;
+    margin-bottom: 5px;
+    width: 100%;
+    position: relative;
+    align-items: center;
+}
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #a0a0a0;
+}
+.block-label {
+    margin-left: 5px;
+    color: black;
+    font-family: inherit;
+    font-size: 15px;
+    flex-grow: 1;
+}
+.block-buttons {
+    display: flex;
+}
+.block-button {
+    background: none;
+    border: 0 solid #ccc;
+    color: #000;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+.block-button:hover {
+    background: #ddd;
+}
+textarea {
+    width: 100%;
+    min-height: 50px;
+    resize: none;
+    border: 0 solid #000;
+    padding: 5px;
+    font-family: monospace;
+    color: black;
+}
+.image-block {
+    margin: 5px;
+}
+.add-block-select {
+    border-radius: 0;
+}
+.browse-button {
+    border-radius: 0;
+}
+/* ===================================== */

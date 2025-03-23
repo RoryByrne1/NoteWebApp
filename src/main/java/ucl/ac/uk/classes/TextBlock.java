@@ -9,7 +9,7 @@ public class TextBlock extends Block
     public TextBlock()
     {
         super(generateBlockID());
-        this.text = "";
+        text = "";
     }
 
     public TextBlock(String id, String text)
