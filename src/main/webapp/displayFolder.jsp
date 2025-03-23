@@ -41,18 +41,38 @@
         %>
     </div>
 
-    <jsp:include page="sorting.jsp"/>
-
-    <div class="items">
-        <%
-        for (Item item : contentsList)
-        {
-            if (item instanceof Note)
-                {%><div class="item"><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId()%>">📄 <%= item.getName() %></a></div><%}
-            else if (item instanceof Folder)
-                {%><div class="item"><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() + parameters%>">📁 <%= item.getName() %></a></div><%}
-        }
-        %>
+    <%
+        String nextOrder = ascending ? "desc" : "asc";
+    %>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-item"><a class="nice-link" href="?sort=name&order=<%= sortBy.equals("name") ? nextOrder : "asc" %>">
+                        name <%= sortBy.equals("name") ? (ascending ? "↑" : "↓") : "" %>
+                    </a></th>
+                    <th class="table-edited"><a class="nice-link" href="?sort=lastEdited&order=<%= sortBy.equals("lastEdited") ? nextOrder : "asc" %>">
+                        last modified <%= sortBy.equals("lastEdited") ? (ascending ? "↑" : "↓") : "" %>
+                    </a></th>
+                    <th class="table-created"><a class="nice-link" href="?sort=createdAt&order=<%= sortBy.equals("createdAt") ? nextOrder : "asc" %>">
+                        created <%= sortBy.equals("createdAt") ? (ascending ? "↑" : "↓") : "" %>
+                    </a></th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for (Item item : contentsList) { %>
+            <tr>
+                <% if (item instanceof Note) { %>
+                <td class="table-item"><a class="nice-link" href="<%= request.getContextPath() %>/displayNote<%= pathString + "/" + item.getId() %>">📄 <%= item.getName() %></a></td>
+                <% } else if (item instanceof Folder) { %>
+                <td class="table-item"><a class="nice-link" href="<%= request.getContextPath() %>/displayFolder<%= pathString + "/" + item.getId() %>">📁 <%= item.getName() %></a></td>
+                <% } %>
+                <td class="table-edited"><div class="table-date-body"><%= item.getLastEditedReadable(true) %></div></td>
+                <td class="table-created"><div class="table-date-body"><%= item.getCreatedAtReadable(true) %></div></td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
     </div>
 
     <script>

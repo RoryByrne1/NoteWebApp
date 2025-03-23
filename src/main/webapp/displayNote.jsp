@@ -8,6 +8,16 @@
   <title><%=note.getName()%></title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
   <jsp:include page="header.jsp"/>
+  <style>
+    .note-contents {
+      margin: 20px;
+    }
+    .text-block {
+      white-space: pre-wrap;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
 <div>
@@ -40,7 +50,7 @@
       for (Block b: note.getBlocksList())
       {
         if (b instanceof TextBlock) { %>
-          <p><%= ((TextBlock) b).getText().replaceAll("\n","<br>")%></p>
+          <div class="text-block"><%= ((TextBlock) b).getText()%></div>
         <% } else if (b instanceof ImageBlock) { %>
           <img src="/<%= ((ImageBlock) b).getImagePath()%>" width="300" alt="<%= ((ImageBlock) b).getImagePath()%> 1">
         <% } else if (b instanceof URLBlock) { %>

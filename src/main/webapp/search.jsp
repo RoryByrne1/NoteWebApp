@@ -31,7 +31,7 @@
     <p><%= notesMapList.size() %> results</p>
   </div>
 
-  <div class="notes">
+  <div class="notes-container">
     <%
       Note note;
       String pathString;

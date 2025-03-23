@@ -45,8 +45,8 @@ public abstract class Item
     {
         boolean result = switch (sortBy) {
             case "name" -> name.compareToIgnoreCase(other.getName()) < 0;
-            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) < 0;
             case "lastEdited" -> lastEdited.compareTo(other.getLastEdited()) < 0;
+            case "createdAt" -> createdAt.compareTo(other.getCreatedAt()) < 0;
             default -> throw new IllegalArgumentException("invalid sortBy parameter: " + sortBy);
         };
         return ascending == result;
@@ -71,7 +71,7 @@ public abstract class Item
             Instant instant = Instant.parse(isoDate);
             DateTimeFormatter formatter;
             if (longDate)
-                formatter = DateTimeFormatter.ofPattern("d MMMM yyyy, HH:mm:ss")
+                formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
                         .withLocale(Locale.UK)
                         .withZone(ZoneId.systemDefault());
             else
