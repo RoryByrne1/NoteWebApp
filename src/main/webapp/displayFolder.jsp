@@ -57,6 +57,7 @@
                     <th class="table-created"><a class="nice-link" href="?sort=createdAt&order=<%= sortBy.equals("createdAt") ? nextOrder : "asc" %>">
                         created <%= sortBy.equals("createdAt") ? (ascending ? "↑" : "↓") : "" %>
                     </a></th>
+                    <th class="table-delete"></th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +70,13 @@
                 <% } %>
                 <td class="table-edited"><div class="table-date-body"><%= item.getLastEditedReadable(true) %></div></td>
                 <td class="table-created"><div class="table-date-body"><%= item.getCreatedAtReadable(true) %></div></td>
+                <td class="table-delete">
+                    <form action="<%= request.getContextPath() %>/deleteItem" method="post" style="display:inline;">
+                        <input type="hidden" name="itemId" value="<%= item.getId() %>">
+                        <input type="hidden" name="pathString" value="<%= pathString %>">
+                        <button class="delete-button" type="submit" title="delete this item">✖</button>
+                    </form>
+                </td>
             </tr>
             <% } %>
             </tbody>

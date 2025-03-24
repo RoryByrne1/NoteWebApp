@@ -4,6 +4,7 @@ ucl\ac\uk\classes\ImageBlock.class
 ucl\ac\uk\classes\Block.class
 ucl\ac\uk\classes\Folder.class
 ucl\ac\uk\classes\TextBlock.class
+ucl\ac\uk\servlets\DeleteItemServlet.class
 ucl\ac\uk\model\Model.class
 ucl\ac\uk\servlets\CreateFolderServlet.class
 ucl\ac\uk\classes\Note.class

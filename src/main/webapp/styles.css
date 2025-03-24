@@ -109,6 +109,19 @@ td {
 .table-created {
     width: 140px;
 }
+.table-delete {
+    width: 20px
+}
+.delete-button {
+    background: none;
+    border: 0 solid #ccc;
+    color: #000;
+    font-size: 13px;
+    cursor: pointer;
+}
+.delete-button:hover {
+    color: #e00;
+}
 /* ===================================== */
 /* ============ SEARCH CSS ============= */
 #query {

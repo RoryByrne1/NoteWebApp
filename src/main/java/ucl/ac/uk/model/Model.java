@@ -31,7 +31,7 @@ public class Model {
         }
     }
 
-    public Item resolvePathFrom(List<String> path, Item i)
+    public static Item resolvePathFrom(List<String> path, Item i)
     {
         Item current = i;
 
@@ -248,9 +248,12 @@ public class Model {
         saveNotes();
     }
 
-    public Folder getRootDirectory()
+    public void updateLastEditedAlong(List<String> path)
     {
-        return rootDirectory;
+        for (int i = 0; i <= path.size(); i++) {
+            List<String> subPath = path.subList(0, i);
+            resolvePath(subPath).updateLastEdited();
+        }
     }
 
     private Folder loadNotes() {

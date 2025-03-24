@@ -1,8 +1,6 @@
 package ucl.ac.uk.servlets;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -119,15 +117,13 @@ public class EditNoteServlet extends HttpServlet
         }
 
         // update last edited of each folder the note is in
-        for (int i = 0; i <= path.size(); i++) {
-            List<String> subPath = path.subList(0, i);
-            model.resolvePath(subPath).updateLastEdited();
-        }
+        model.updateLastEditedAlong(path);
 
         // save changes and redirect to the edit page
         model.saveNotes();
         response.sendRedirect(request.getContextPath() + "/editNote" + pathString);
     }
+
     public void handleImageUpload(HttpServletRequest request, HttpServletResponse response, Block block)
             throws IOException, ServletException {
         Part imagePart = request.getPart("imageUpload_" + block.getId());
@@ -152,7 +148,8 @@ public class EditNoteServlet extends HttpServlet
         }
     }
 
-    private String extractFileName(Part part) {
+    private String extractFileName(Part part)
+    {
         String contentDisposition = part.getHeader("content-disposition");
         for (String content : contentDisposition.split(";")) {
             if (content.trim().startsWith("filename")) {
@@ -162,7 +159,8 @@ public class EditNoteServlet extends HttpServlet
         return null;
     }
 
-    private String generateUniqueFileName(String originalFileName) {
+    private String generateUniqueFileName(String originalFileName)
+    {
         File file;
         String baseName = originalFileName.substring(0, originalFileName.lastIndexOf('.'));
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
