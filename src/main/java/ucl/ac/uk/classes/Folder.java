@@ -20,6 +20,13 @@ public class Folder extends Item
         contents = new HashMap<>();
     }
 
+    // renaming a folder
+    public Folder(String name, Map<String, Item> contents, String createdAt)
+    {
+        super(name, createdAt);
+        this.contents = contents;
+    }
+
     // loading old note
     public Folder(String id, String name, Map<String, Item> contents, String createdAt, String lastEdited)
     {
@@ -79,10 +86,9 @@ public class Folder extends Item
         return contents.get(itemId);
     }
 
-    public void setContents(Map<String, Item> itemMap)
+    public Map<String, Item> getContents()
     {
-        this.contents = itemMap;
-        updateLastEdited();
+        return contents;
     }
 
     public List<Item> getContentsList(String sortBy, boolean ascending)

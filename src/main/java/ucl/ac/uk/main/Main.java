@@ -116,27 +116,13 @@ public class Main
 
   public static void main2(String[] args)
   {
-//    System.out.println("yes?!");
-//    Folder folder = new Folder("folder-1", "folder 1", new HashMap<>(), "then", "now");
-//    Note note = new Note("n1", "note 1", new ArrayList<>(), "then", "now");
-//    System.out.println(folder.name);
-    Model notes = new Model();
-//    notes.addItem(new ArrayList<>(), folder);
-    List<String> path = new ArrayList<>();
-//    notes.addItem(path, note);
-//    notes.saveNotes();
-//    Note note = new Note("n2", "note 2", new ArrayList<>(), "then", "now");
-//    notes.addItem(path, note);
-    path.add("n2");
-//    Folder folder = new Folder("f3", "f3", new HashMap<>(), "then", "now");
-    Block b = new TextBlock("b1", "this is the text of the first block");
-    Block b2 = new TextBlock("b2", "this is the text of the second block");
-    Block b3 = new ImageBlock("b3", "images/image.png");
-    Block b4 = new TextBlock("b4", "now some text after the image");
-//    notes.addBlockFrom(path, b);
-//    notes.addBlockFrom(path, b2);
-//    notes.addBlockFrom(path, b3);
-//    notes.addBlockFrom(path, b4);
-//    Note note2 = new Note("n3", "note 3", new ArrayList<>(), "then", "now");
+    Model model = new Model();
+
+    List<String> oldFolderPath = new ArrayList<>();
+    List<String> newFolderPath = new ArrayList<>();
+
+    newFolderPath.add("folder-2");
+
+    model.moveItem(newFolderPath,oldFolderPath,"n1742776607014");
   }
 }

@@ -22,6 +22,14 @@ public abstract class Item
         lastEdited = generateTimeStamp();
     }
 
+    public Item(String name, String createdAt)
+    {
+        this.name = name;
+        id = generateId();
+        this.createdAt = createdAt;
+        lastEdited = generateTimeStamp();
+    }
+
     public Item(String id, String name, String createdAt, String lastEdited)
     {
         this.id = id;

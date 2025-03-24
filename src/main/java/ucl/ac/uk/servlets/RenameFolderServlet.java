@@ -14,16 +14,17 @@ import ucl.ac.uk.model.Model;
 import ucl.ac.uk.model.ModelFactory;
 
 
-@WebServlet("/createFolder/*")
-public class CreateFolderServlet extends HttpServlet {
+@WebServlet("/renameFolder/*")
+public class RenameFolderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Model model = ModelFactory.getModel();
-
         String pathString = request.getPathInfo();
-        String folderName = request.getParameter("folderName");
+        String newName = request.getParameter("newName");
+
+        System.out.println("name" + newName);
 
         List <String> path;
 
@@ -36,12 +37,18 @@ public class CreateFolderServlet extends HttpServlet {
             path = List.of(pathString.substring(1).split("/"));
 
         if (model.checkFolder(path)) {
-            model.addItem(path, new Folder(folderName));
+            List<String> parentPath = path.subList(0, path.size() - 1);
+
+            Folder oldFolder = (Folder) model.resolvePath(path);
+            Folder newFolder = new Folder(newName, oldFolder.getContents(), oldFolder.getCreatedAt());
+
+            model.deleteItem(parentPath, path.getLast());
+            model.addItem(parentPath, newFolder);
+
+            // update last edited of each folder the note is in
+            model.updateLastEditedAlong(parentPath);
+
+            response.sendRedirect("/displayFolder" + pathString.substring(0, pathString.lastIndexOf("/")) + "/" + newFolder.getId());
         }
-
-        // update last edited of each folder the note is in
-        model.updateLastEditedAlong(path);
-
-        response.sendRedirect("/displayFolder" + pathString);
     }
 }

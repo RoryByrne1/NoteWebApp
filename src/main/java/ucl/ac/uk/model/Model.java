@@ -139,6 +139,13 @@ public class Model {
         return searchNotesFrom(new ArrayList<>(), sortBy, ascending, query);
     }
 
+    public List<Folder> getSubfolders(List<String> path)
+    {
+        if (checkFolder(path))
+            return ((Folder)resolvePath(path)).getFoldersList("name", true);
+        return null;
+    }
+
     public void pin(List<String> path, boolean isPinned)
     {
         if (checkNote(path))
@@ -197,15 +204,18 @@ public class Model {
         saveNotes();
     }
 
-    public void moveItem(List<String> path, List<String> newFolderPath)
+    public void moveItem(List<String> oldFolderPath, List<String> newFolderPath, String itemId)
     {
-        if (checkPath(path) && checkFolder(newFolderPath))
+        List<String> oldPath = new ArrayList<>(oldFolderPath);
+        oldPath.add(itemId);
+
+        if (checkFolder(oldFolderPath) && checkFolder(newFolderPath))
         {
-            Item item = resolvePath(path);
-            Folder oldFolder = (Folder) resolvePath(path.subList(0, path.size() - 1));
+            Item item = resolvePath(oldPath);
+            Folder oldFolder = (Folder) resolvePath(oldFolderPath);
             Folder newFolder = (Folder) resolvePath(newFolderPath);
 
-            oldFolder.deleteItem(item.getId());
+            oldFolder.deleteItem(itemId);
             newFolder.addItem(item);
         }
         saveNotes();

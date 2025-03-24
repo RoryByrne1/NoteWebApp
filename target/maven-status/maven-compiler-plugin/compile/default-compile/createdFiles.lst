@@ -1,5 +1,6 @@
 ucl\ac\uk\classes\URLBlock.class
 ucl\ac\uk\classes\Item.class
+ucl\ac\uk\servlets\RenameFolderServlet.class
 ucl\ac\uk\classes\ImageBlock.class
 ucl\ac\uk\classes\Block.class
 ucl\ac\uk\classes\Folder.class

@@ -8,7 +8,7 @@
     <%
         String folderName = (String) request.getAttribute("folderName");
     %>
-    <title><%=folderName.equals("root")? "my notes" : folderName%></title>
+    <title><%= folderName.equals("root")? "my notes" : folderName %></title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/styles.css">
     <jsp:include page="header.jsp"/>
 </head>
@@ -93,10 +93,19 @@
         function addNote() {
             window.location.href = "<%= request.getContextPath() %>/createNote<%= pathString%>?noteName=untitled";
         }
+        function renameFolder() {
+            let newName = prompt("enter new name for <%= folderName %>:");
+            if (newName) {
+                window.location.href = "<%= request.getContextPath() %>/renameFolder<%= pathString + parameters%>&newName=" + encodeURIComponent(newName);
+            }
+        }
     </script>
-
+    <% if (!folderName.equals("root")) { %>
+    <button type="button" title="rename this folder" onclick="renameFolder()">rename folder</button>
+    <% } %>
     <button type="button" title="create a new folder in this folder" onclick="addFolder()">add folder</button>
     <button type="button" title="create a new note in this folder" onclick="addNote()">add note</button>
+
 </div>
 </body>
 </html>
