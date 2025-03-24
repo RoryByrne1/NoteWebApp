@@ -167,6 +167,19 @@ td {
     color: black;
     font-family: inherit;
 }
+.path-container {
+    margin-bottom: 5px;
+    width: 200px;
+    border: 1px solid #ccc;
+}
+#path {
+    width: 100%;
+    margin-left: 4px;
+    border: none;
+    outline: none;
+    padding: 4px 0;
+    background-color: transparent;
+}
 .pin-box {
     margin-bottom: 10px;
 }

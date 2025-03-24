@@ -23,7 +23,16 @@
         <b>last edited:</b> <%= note.getLastEditedReadable(true) %>
     </div>
 
-    <form action="<%= request.getContextPath() %>/editNote<%= request.getAttribute("pathString") %>" method="post" enctype="multipart/form-data">
+    <%
+        String pathString = (String) request.getAttribute("pathString");
+        String parentPathString = pathString.substring(0, pathString.lastIndexOf("/")).replaceAll("-", " ");
+        if (parentPathString.isEmpty()) parentPathString = "/";
+    %>
+
+    <form action="<%= request.getContextPath() %>/editNote<%= pathString %>" method="post" enctype="multipart/form-data">
+        <div class="path-container">
+            <input type="text" id="path" name="path" value="<%= parentPathString %>" placeholder="enter new path"/>
+        </div>
         <div class="name-container">
             <input type="text" id="name" name="name" value="<%= note.getName() %>" placeholder="enter name"/>
         </div>

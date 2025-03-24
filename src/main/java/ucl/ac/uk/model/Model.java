@@ -40,7 +40,7 @@ public class Model {
             if (!(current instanceof Folder))
                 return null;
 
-            current = ((Folder) current).getItem(itemId);
+            current = ((Folder)current).getItem(itemId);
 
             if (current == null)
             {
@@ -90,13 +90,6 @@ public class Model {
         return true;
     }
 
-    public List<Item> getContentsListFrom(List<String> path, String sortBy, boolean ascending)
-    {
-        if (checkFolder(path))
-            return ((Folder)resolvePath(path)).getContentsList(sortBy, ascending);
-        return null;
-    }
-
     public Note getNote(List<String> path)
     {
         if (checkNote(path))
@@ -139,13 +132,6 @@ public class Model {
         return searchNotesFrom(new ArrayList<>(), sortBy, ascending, query);
     }
 
-    public List<Folder> getSubfolders(List<String> path)
-    {
-        if (checkFolder(path))
-            return ((Folder)resolvePath(path)).getFoldersList("name", true);
-        return null;
-    }
-
     public void pin(List<String> path, boolean isPinned)
     {
         if (checkNote(path))
@@ -168,7 +154,6 @@ public class Model {
     public List<Map<String, Object>> getRecents(int quantity)
     {
         List<Map<String, Object>> notes = searchNotes("lastEdited",false, "");
-        System.out.println(notes);
         if (notes.size() > quantity)
             return notes.subList(0, quantity);
         return notes;
@@ -204,12 +189,12 @@ public class Model {
         saveNotes();
     }
 
-    public void moveItem(List<String> oldFolderPath, List<String> newFolderPath, String itemId)
+    public boolean moveItem(List<String> oldFolderPath, List<String> newFolderPath, String itemId)
     {
         List<String> oldPath = new ArrayList<>(oldFolderPath);
         oldPath.add(itemId);
 
-        if (checkFolder(oldFolderPath) && checkFolder(newFolderPath))
+        if (checkFolder(oldFolderPath) && checkFolder(newFolderPath) && checkPath(oldPath))
         {
             Item item = resolvePath(oldPath);
             Folder oldFolder = (Folder) resolvePath(oldFolderPath);
@@ -217,8 +202,12 @@ public class Model {
 
             oldFolder.deleteItem(itemId);
             newFolder.addItem(item);
+
+            saveNotes();
+
+            return true;
         }
-        saveNotes();
+        return false;
     }
 
     public void addBlock(List<String> path, Block block)

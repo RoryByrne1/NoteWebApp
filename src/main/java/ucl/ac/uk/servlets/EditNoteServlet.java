@@ -1,6 +1,7 @@
 package ucl.ac.uk.servlets;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -119,9 +120,29 @@ public class EditNoteServlet extends HttpServlet
         // update last edited of each folder the note is in
         model.updateLastEditedAlong(path);
 
-        // save changes and redirect to the edit page
-        model.saveNotes();
-        response.sendRedirect(request.getContextPath() + "/editNote" + pathString);
+        // path update, last so it doesn't mess up others
+        String newPathString = request.getParameter("path");
+        String parentPathString = pathString.substring(0, pathString.lastIndexOf("/"));
+        boolean moved = false;
+        if (newPathString != null && !newPathString.trim().isEmpty())
+        {
+            newPathString = newPathString.replaceAll("\\s+", "-");
+            if (!newPathString.equals(parentPathString))
+            {
+                List<String> newPath;
+                if (newPathString.equals("/"))
+                    newPath = new ArrayList<>();
+                else
+                    newPath = List.of(newPathString.substring(1).split("/"));
+                moved = model.moveItem(path.subList(0, path.size() - 1), newPath, path.getLast());
+            }
+        }
+
+        // redirect to the edit page
+        if (moved) {
+            response.sendRedirect(request.getContextPath() + "/editNote" + newPathString + "/" + path.getLast());
+        } else
+            response.sendRedirect(request.getContextPath() + "/editNote" + pathString);
     }
 
     public void handleImageUpload(HttpServletRequest request, HttpServletResponse response, Block block)

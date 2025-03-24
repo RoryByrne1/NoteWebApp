@@ -22,7 +22,7 @@
     <input type="hidden" name="sort" value="<%= sortBy %>">
     <input type="hidden" name="order" value="<%= ascending ? "asc" : "desc" %>">
     <input type="text" id="query" name="q" value="<%= query %>" placeholder="enter search query"/>
-    <button class="query-button" title="search notes for query" id="search">search</button>
+    <button class="query-button" title="search notes for query" id="search" style="font-size: 20px">🔎︎</button>
   </form>
 
   <jsp:include page="sorting.jsp"/>
