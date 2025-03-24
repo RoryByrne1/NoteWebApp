@@ -134,7 +134,8 @@ public class EditNoteServlet extends HttpServlet
                     newPath = new ArrayList<>();
                 else
                     newPath = List.of(newPathString.substring(1).split("/"));
-                moved = model.moveItem(path.subList(0, path.size() - 1), newPath, path.getLast());
+                Item item = model.resolvePath(path);
+                moved = model.moveItem(path.subList(0, path.size() - 1), newPath, item.getId());
             }
         }
 

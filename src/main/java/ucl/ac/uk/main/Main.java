@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.logging.*;
 
 import org.apache.catalina.Context;
@@ -12,13 +11,6 @@ import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
-
-// FOR MAIN TESTING ==========================
-import ucl.ac.uk.classes.*;
-import ucl.ac.uk.model.Model;
-
-import java.util.List;
-// ===========================================
 
 public class Main {
   private static final int DEFAULT_PORT = 8080;

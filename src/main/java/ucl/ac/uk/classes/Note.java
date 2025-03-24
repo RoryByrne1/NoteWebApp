@@ -14,7 +14,7 @@ public class Note extends Item
     public Note(String name)
     {
         super(name);
-        blocks = new LinkedList<>();
+        blocks = new ArrayList<>();
         pinned = false;
     }
 

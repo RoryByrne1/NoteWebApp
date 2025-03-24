@@ -28,13 +28,9 @@ public class DisplayNoteServlet extends HttpServlet
         List<String> path = List.of(pathString.substring(1).split("/"));
         Note note = model.getNote(path);
 
-        // Get the data from the model
-        // Then add the data to the request object that will be sent to the Java Server Page, so that
-        // the JSP can access the data (a Java data structure).
         request.setAttribute("pathString", pathString);
         request.setAttribute("note", note);
 
-        // Then forward to JSP.
         ServletContext context = getServletContext();
         RequestDispatcher dispatch = context.getRequestDispatcher("/displayNote.jsp");
         dispatch.forward(request, response);

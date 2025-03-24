@@ -64,16 +64,21 @@ public class Folder extends Item
         item.setName(newName);
     }
 
+    public boolean containsName(String itemName)
+    {
+        for (Item item: contents.values())
+        {
+            if (item.getName().equals(itemName))
+                return true;
+        }
+        return false;
+    }
+
     public void addItem(Item item)
     {
         checkName(item);
         contents.put(item.getId(), item);
         updateLastEdited();
-    }
-
-    public Boolean checkItem(String itemId)
-    {
-        return contents.containsKey(itemId);
     }
 
     public void deleteItem(String itemId)

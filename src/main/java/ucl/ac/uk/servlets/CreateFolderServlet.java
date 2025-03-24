@@ -35,12 +35,12 @@ public class CreateFolderServlet extends HttpServlet {
         else
             path = List.of(pathString.substring(1).split("/"));
 
-        if (model.checkFolder(path)) {
+        if (model.checkFolder(path) && !((Folder)model.resolvePath(path)).containsName(folderName)) {
             model.addItem(path, new Folder(folderName));
-        }
 
-        // update last edited of each folder the note is in
-        model.updateLastEditedAlong(path);
+            // update last edited of each folder the note is in
+            model.updateLastEditedAlong(path);
+        }
 
         response.sendRedirect("/displayFolder" + pathString);
     }

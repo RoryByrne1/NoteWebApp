@@ -21,7 +21,7 @@ public class CreateNoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Get model instance
+        // get model instance
         Model model = ModelFactory.getModel();
 
         // Extract the path and folder name from request

@@ -14,11 +14,30 @@
   <%
     List<Map<String, Object>> pinnedMapList = (List<Map<String, Object>>) request.getAttribute("pinnedMapList");
     List<Map<String, Object>> recentsMapList = (List<Map<String, Object>>) request.getAttribute("recentsMapList");
+    String sortBy = (String) request.getAttribute("sortBy");
+    boolean ascending = (boolean) request.getAttribute("ascending");
   %>
 
   <h1>pinned</h1>
 
-  <jsp:include page="sorting.jsp"/>
+  <div class="sorting">
+    <span><b>sort:</b></span>
+    <%
+      String nameArrow = sortBy.equals("name") ? (ascending ? " ↑" : " ↓") : "  ";
+      String modifiedArrow = sortBy.equals("lastEdited") ? (ascending ? " ↑" : " ↓") : "  ";
+      String dateArrow = sortBy.equals("createdAt") ? (ascending ? " ↑" : " ↓") : "  ";
+
+      String nextOrder = ascending ? "desc" : "asc";
+
+      String nameOrder = sortBy.equals("name") ? nextOrder : "asc";
+      String modifiedOrder = sortBy.equals("lastEdited") ? nextOrder : "asc";
+      String dateOrder = sortBy.equals("createdAt") ? nextOrder : "asc";
+    %>
+
+    <a class="nice-link" href="?sort=name&order=<%= nameOrder %>">name<%= "  " + nameArrow %></a> |
+    <a class="nice-link" href="?sort=lastEdited&order=<%= modifiedOrder %>">last modified<%= modifiedArrow %></a> |
+    <a class="nice-link" href="?sort=createdAt&order=<%= dateOrder %>">date created<%= dateArrow %></a>
+  </div>
 
   <div class="notes-container">
     <%
